@@ -15,13 +15,27 @@ const LoggedIn = (props) => {
             if (reset) props.setActiveList({});
         }
     };
+    const print = async()=>{
+        // const {data} = await props.fetchUser();
+        // if (data) {
+        //     console.log(data.getCurrentUser.firstName);
+        // }
+        console.log(props.name)
+    }
 
     return (
+        <>
+        <WNavItem hoverAnimation="lighten">
+                <WButton className="navbar-options" onClick={print} wType="texted" hoverAnimation="text-primary" style={{color: "pink"}}>  
+                    {props.user.firstName + " "+ props.user.lastName}
+                </WButton>
+            </WNavItem>
         <WNavItem hoverAnimation="lighten">
             <WButton className="navbar-options" onClick={handleLogout} wType="texted" hoverAnimation="text-primary">
                 Logout
             </WButton>
         </WNavItem >
+        </>
     );
 };
 
@@ -29,13 +43,13 @@ const LoggedOut = (props) => {
     return (
         <>
             <WNavItem hoverAnimation="lighten">
-                <WButton className="navbar-options" onClick={props.setShowLogin} wType="texted" hoverAnimation="text-primary">
-                    Login
+                <WButton className="navbar-options" onClick={props.setShowCreate} wType="texted" hoverAnimation="text-primary" style={{color: "pink"}}>  
+                    Create Account 
                 </WButton>
             </WNavItem>
             <WNavItem hoverAnimation="lighten">
-                <WButton className="navbar-options" onClick={props.setShowCreate} wType="texted" hoverAnimation="text-primary"> 
-                    Sign Up 
+                <WButton className="navbar-options" onClick={props.setShowLogin} wType="texted" hoverAnimation="text-primary">
+                    Login
                 </WButton>
             </WNavItem>
         </>
@@ -44,11 +58,12 @@ const LoggedOut = (props) => {
 
 
 const NavbarOptions = (props) => {
+
     return (
         <>
             {
                 props.auth === false ? <LoggedOut setShowLogin={props.setShowLogin} setShowCreate={props.setShowCreate} />
-                : <LoggedIn fetchUser={props.fetchUser} setActiveList={props.setActiveList} logout={props.logout} />
+                : <LoggedIn fetchUser={props.fetchUser} setActiveList={props.setActiveList} logout={props.logout} user={props.user}/>
             }
         </>
 
