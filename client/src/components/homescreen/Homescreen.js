@@ -1,6 +1,7 @@
 import Logo 							from '../navbar/Logo';
 import Login 							from '../modals/Login';
 import Delete 							from '../modals/Delete';
+import UpdateAccount					from '../modals/UpdateAccount';
 import MainContents 					from '../main/MainContents';
 import CreateAccount 					from '../modals/CreateAccount';
 import NavbarOptions 					from '../navbar/NavbarOptions';
@@ -207,25 +208,31 @@ const Homescreen = (props) => {
 
 	const setShowLogin = () => {
 		toggleShowDelete(false);
+		toggleShowAccount(false);
 		toggleShowCreate(false);
 		toggleShowLogin(!showLogin);
 	};
 
 	const setShowCreate = () => {
 		toggleShowDelete(false);
+		toggleShowAccount(false);
 		toggleShowLogin(false);
 		toggleShowCreate(!showCreate);
 	};
 
 	const setShowDelete = () => {
 		toggleShowCreate(false);
+		toggleShowAccount(false);
 		toggleShowLogin(false);
 		toggleShowDelete(!showDelete)
 	};
 
-	const setUpdateAccount = () =>{
-
-	}
+	const setShowUpdate = () =>{
+		toggleShowCreate(false);
+		toggleShowLogin(false);
+		toggleShowDelete(false);
+		toggleShowAccount(!showAccount);
+	};
 	
 	const sort = (criteria) => {
 		let prevSortRule = sortRule;
@@ -251,7 +258,7 @@ const Homescreen = (props) => {
 							fetchUser={props.fetchUser} 	auth={auth} 
 							setShowCreate={setShowCreate} 	setShowLogin={setShowLogin}
 							reloadTodos={refetch} 			setActiveList={loadTodoList}
-							user={props.user}
+							user={props.user}				setShowUpdate={setShowUpdate}
 						/>
 					</ul>
 				</WNavbar>
@@ -301,6 +308,10 @@ const Homescreen = (props) => {
 
 			{
 				showLogin && (<Login fetchUser={props.fetchUser} reloadTodos={refetch}setShowLogin={setShowLogin} />)
+			}
+
+			{
+				showAccount && (<UpdateAccount fetchUser={props.fetchUser} reloadTodos={refetch} setShowUpdate={setShowUpdate} user={props.user}/>)
 			}
 
 		</WLayout>

@@ -23,6 +23,18 @@ export const REGISTER = gql`
 		}
 	}
 `;
+
+export const UPDATE = gql`
+mutation Update($email: String!, $password: String!, $firstName: String!, $lastName: String!, $oldEmail: String!) {
+	update(email: $email, password: $password, firstName: $firstName, lastName: $lastName, oldEmail: $oldEmail) {
+		email
+		password
+		firstName
+		lastName
+	}
+}
+`;
+
 export const LOGOUT = gql`
 	mutation Logout {
 		logout 

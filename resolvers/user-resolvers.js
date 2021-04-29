@@ -82,6 +82,18 @@ module.exports = {
 			res.clearCookie('refresh-token');
 			res.clearCookie('access-token');
 			return true;
+		},
+
+		update: async (_, args, { res }) => {
+			const { email, password, firstName, lastName, oldEmail } = args;
+			const alreadyRegistered = await User.findOne({email: oldEmail});
+			if(alreadyRegistered) {
+				console.log(alreadyRegistered);
+				const id = alreadyRegistered._id;
+				const update = await User.updateOne({_id: id}, {email: email, password: password, firstName: firstName, lastName: lastName});
+				return update;
+			}
+			return "";
 		}
 	}
 }
