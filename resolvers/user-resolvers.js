@@ -90,7 +90,8 @@ module.exports = {
 			if(alreadyRegistered) {
 				console.log(alreadyRegistered);
 				const id = alreadyRegistered._id;
-				const update = await User.updateOne({_id: id}, {email: email, password: password, firstName: firstName, lastName: lastName});
+				const hashed = await bcrypt.hash(password, 10);
+				const update = await User.updateOne({_id: id}, {email: email, password: hashed, firstName: firstName, lastName: lastName, initials: `${firstName[0]}.${lastName[0]}.`});
 				return update;
 			}
 			return "";

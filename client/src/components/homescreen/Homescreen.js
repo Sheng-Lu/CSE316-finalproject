@@ -1,12 +1,11 @@
 import Logo 							from '../navbar/Logo';
 import Login 							from '../modals/Login';
 import Delete 							from '../modals/Delete';
+import RedGlobe							from '../../image/2554416-world-map-red-globe-america-europe-and-africa.jpg';
 import UpdateAccount					from '../modals/UpdateAccount';
-import MainContents 					from '../main/MainContents';
 import CreateAccount 					from '../modals/CreateAccount';
 import NavbarOptions 					from '../navbar/NavbarOptions';
 import * as mutations 					from '../../cache/mutations';
-import SidebarContents 					from '../sidebar/SidebarContents';
 import { GET_DB_TODOS } 				from '../../cache/queries';
 import React, { useState } 				from 'react';
 import { useMutation, useQuery } 		from '@apollo/client';
@@ -245,7 +244,7 @@ const Homescreen = (props) => {
 	}
 
 	return (
-		<WLayout wLayout="header-lside">
+		<WLayout wLayout="header-side">
 			<WLHeader>
 				<WNavbar color="colored">
 					<ul>
@@ -264,40 +263,6 @@ const Homescreen = (props) => {
 				</WNavbar>
 			</WLHeader>
 
-			<WLSide side="left">
-				<WSidebar>
-					{
-						activeList ? 
-							<SidebarContents
-								listIDs={SidebarData} 				activeid={activeList._id} auth={auth}
-								handleSetActive={handleSetActive} 	createNewList={createNewList}
-								updateListField={updateListField} 	key={activeList._id}
-							/>
-							:
-							<></>
-					}
-				</WSidebar>
-			</WLSide>
-			<WLMain>
-				{
-					activeList ? 
-					
-							<div className="container-secondary">
-								<MainContents
-									addItem={addItem} 				deleteItem={deleteItem}
-									editItem={editItem} 			reorderItem={reorderItem}
-									setShowDelete={setShowDelete} 	undo={tpsUndo} redo={tpsRedo}
-									activeList={activeList} 		setActiveList={loadTodoList}
-									canUndo={canUndo} 				canRedo={canRedo}
-									sort={sort}
-								/>
-							</div>
-						:
-							<div className="container-secondary" />
-				}
-
-			</WLMain>
-
 			{
 				showDelete && (<Delete deleteList={deleteList} activeid={activeList._id} setShowDelete={setShowDelete} />)
 			}
@@ -314,6 +279,11 @@ const Homescreen = (props) => {
 				showAccount && (<UpdateAccount fetchUser={props.fetchUser} reloadTodos={refetch} setShowUpdate={setShowUpdate} user={props.user}/>)
 			}
 
+			{
+				(!auth) && (<div> <img src={RedGlobe} class="welcome"/> 
+					<div class="welcome-text"> Welcome To The World Data Mapper</div>
+				</div>)
+			}
 		</WLayout>
 	);
 };
