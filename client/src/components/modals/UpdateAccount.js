@@ -36,7 +36,7 @@ const UpdateAccount = (props) => {
 
 	return (
 		<WModal className="signup-modal"  cover="true" visible={props.setShowUpdate}>
-			<WMHeader  className="modal-header" onClose={() => props.setShowUpdate(false)}>
+			<WMHeader style={{color: "white"}} className="modal-header" onClose={() => props.setShowUpdate(false)}>
 				Update Account Information
 			</WMHeader>
 
@@ -46,13 +46,13 @@ const UpdateAccount = (props) => {
 							<WRow className="modal-col-gap signup-modal">
 								<WCol size="6">
 									<WInput 
-										className="" onBlur={updateInput} name="firstName" labelAnimation="up" 
+										className="" style={{color: "white"}} onBlur={updateInput} name="firstName" labelAnimation="up" 
 										barAnimation="solid" labelText="First Name" wType="outlined" inputType="text" 
 									/>
 								</WCol>
 								<WCol size="6">
 									<WInput 
-										className="" onBlur={updateInput} name="lastName" labelAnimation="up" 
+										className="" style={{color: "white"}} onBlur={updateInput} name="lastName" labelAnimation="up" 
 										barAnimation="solid" labelText="Last Name" wType="outlined" inputType="text" 
 									/>
 								</WCol>
@@ -60,12 +60,12 @@ const UpdateAccount = (props) => {
 
 							<div className="modal-spacer">&nbsp;</div>
 							<WInput 
-								className="modal-input" onBlur={updateInput} name="email" labelAnimation="up" 
+								className="modal-input" style={{color: "white"}}  onBlur={updateInput} name="email" labelAnimation="up" 
 								barAnimation="solid" labelText="Email Address" wType="outlined" inputType="text" 
 							/>
 							<div className="modal-spacer">&nbsp;</div>
 							<WInput 
-								className="modal-input" onBlur={updateInput} name="password" labelAnimation="up" 
+								className="modal-input" style={{color: "white"}} onBlur={updateInput} name="password" labelAnimation="up" 
 								barAnimation="solid" labelText="Password" wType="outlined" inputType="password" 
 							/>
 					</WMMain>

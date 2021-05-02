@@ -115,7 +115,7 @@ const MapSelector = (props) =>{
 				</div>
 
 				<div className='yourMapRight'><img src={RedGlobe} className='yourMapGlobe'/>
-					<WButton color="red" className='yourMapButton' hoverAnimation='lighten' span='true' onClick={addNewMap} >
+					<WButton color="red" className='yourMapButton' hoverAnimation='lighten' span='True' onClick={addNewMap} >
 						Create New Map
 					</WButton>
 				</div >

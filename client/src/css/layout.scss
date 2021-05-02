@@ -168,6 +168,7 @@ html {
 
 .signup-modal {
     width: 375px;
+    color: white;
 }
 
 .modal-col-gap{
@@ -285,6 +286,8 @@ html {
     height: 75%;
     // background-color: pink;
     width: 33%;
+    // display: flex;
+    // flex-direction: column;
 }
 
 .yourMapButton{
@@ -294,8 +297,8 @@ html {
     text-align: center;
     font-size: 21.5px;
     // width: 33%;
-    // height: 51%;
-    display: flex;
+    // height: 10%;
+    // display: block;
 }
 .map-entry, .map-entry-edit{
     margin-top: 5%;
@@ -304,8 +307,6 @@ html {
     height: 10%;
 }
 
-
-
 .map-entry:hover, .map-entry-edit{
     background-color: lightcoral;
 }
@@ -313,10 +314,11 @@ html {
 .map-entry-name{
     font-size: 160%;
     font-weight: bold;
-    margin-left: 15%;
+    margin-left: 7%;
     height: 100%;
     display: flex;
     align-items: center;
+    cursor: pointer
 }
 
 .map-entry-input{
@@ -326,6 +328,16 @@ html {
 .map-entry-delete{
     display: flex;
     align-items: center;
+}
+
+.map-entry-ed{
+    display: flex;
+    align-items: center;
+    margin-left: 30%;
+}
+
+.map-edit{
+    background-color: transparent;
 }
 
 .map-delete{

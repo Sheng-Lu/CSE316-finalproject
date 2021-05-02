@@ -40,7 +40,7 @@ const Login = (props) => {
 
 	return (
 		<WModal className="login-modal" cover="true" visible={props.setShowLogin}>
-			<WMHeader  className="modal-header" onClose={() => props.setShowLogin(false)}>
+			<WMHeader  style={{color: "white"}} className="modal-header" onClose={() => props.setShowLogin(false)}>
 				Login
 			</WMHeader >
 
@@ -48,9 +48,9 @@ const Login = (props) => {
 				loading ? <div />
 					: <WMMain className="main-login-modal">
 
-						<WInput className="modal-input" onBlur={updateInput} name='email' labelAnimation="up" barAnimation="solid" labelText="Email Address" wType="outlined" inputType='text' />
+						<WInput style={{color: "white"}} className="modal-input" onBlur={updateInput} name='email' labelAnimation="up" barAnimation="solid" labelText="Email Address" wType="outlined" inputType='text' />
 						<div className="modal-spacer">&nbsp;</div>
-						<WInput className="modal-input" onBlur={updateInput} name='password' labelAnimation="up" barAnimation="solid" labelText="Password" wType="outlined" inputType='password' />
+						<WInput style={{color: "white"}} className="modal-input" onBlur={updateInput} name='password' labelAnimation="up" barAnimation="solid" labelText="Password" wType="outlined" inputType='password' />
 
 						{
 							showErr ? <div className='modal-error'>
