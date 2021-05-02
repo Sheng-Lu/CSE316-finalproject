@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { WButton, WInput, WRow, WCol, WNavItem} from 'wt-frontend';
 import { BrowserRouter, Switch, Route, Redirect, useHistory } from 'react-router-dom';
+import RegionSheet          from './RegionSheet';
 
 const MapEntry = (props) => {
 
     const value = props.value.name;
     const [editing, toggleEdit] = useState(false);
-    let history = useHistory();
 
     const handleRename = (e) =>{
         toggleEdit(false);
@@ -23,9 +23,10 @@ const MapEntry = (props) => {
     }
 
     const handleClick = () =>{
-        history.push("/map1");
+        props.handleSelectMap(props.value)
     }
     return(
+
         <>
         <WRow className={!editing ? 'map-entry' : 'map-entry-edit'}>
             <WCol size='1' className='map-entry-ed'>
@@ -34,7 +35,7 @@ const MapEntry = (props) => {
                 </WButton>
             </WCol>
 
-            <WCol size='9' className='map-entry-name'>
+            <WCol size='9' className='map-entry-name' onClick={handleClick}>
                     {
                         editing ?
                         <WInput className='map-entry-input' onBlur={handleRename} autoFocus={true} defaultValue={props.value.name} 
@@ -49,15 +50,9 @@ const MapEntry = (props) => {
                 <i className="material-icons">delete</i>
                 </WButton>
             </WCol>
-            
+
         </WRow>
-        <Switch>
-                <Route
-                path="/map1"
-                name="map1"
-                >
-                </Route>
-        </Switch>
+        
         </>
     )
 }

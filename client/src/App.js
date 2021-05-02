@@ -1,6 +1,7 @@
-import React 			from 'react';
+import React, { useState } 	from 'react';
 import Homescreen 		from './components/homescreen/Homescreen';
 import MapSelector		from './components/map/MapSelector';
+import RegionSheet 		from './components/map/RegionSheet';
 import { useQuery } 	from '@apollo/client';
 import * as queries 	from './cache/queries';
 import { jsTPS } 		from './utils/jsTPS';
@@ -18,6 +19,7 @@ const App = () => {
 		let { getCurrentUser } = data;
 		if(getCurrentUser !== null) { user = getCurrentUser; }
     }
+
 	return(
 		<BrowserRouter>
 			<Switch>
@@ -34,7 +36,8 @@ const App = () => {
 					path="/map"
 					name="map"
 					render={() => 
-						<MapSelector tps={transactionStack} fetchUser={refetch} user={user} refreshTps={refreshTps}/>
+						<MapSelector tps={transactionStack} fetchUser={refetch} user={user} 
+						refreshTps={refreshTps} />
 					} 
 				>
 				</Route>

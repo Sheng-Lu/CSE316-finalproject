@@ -343,3 +343,26 @@ html {
 .map-delete{
     background-color: transparent;
 }
+
+.spreadSheet{
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 3%;
+    margin-bottom: 3%;
+    height: 50%;
+    // width: 50%;
+    background-color: lightgrey;
+}
+
+.spreadSheet-title{
+    background-color: rgb(64, 69, 78);
+}
+
+.region-add, .region-undo, .region-redo, .region-home{
+    background-color: transparent;
+    color: white;
+}
+
+.region-add{
+    color: greenyellow;
+}

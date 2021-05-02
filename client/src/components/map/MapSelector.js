@@ -12,6 +12,9 @@ import * as mutations 					from '../../cache/mutations';
 import RedGlobe							from '../../image/2554416-world-map-red-globe-america-europe-and-africa.jpg';
 import WButton from 'wt-frontend/build/components/wbutton/WButton';
 
+import { BrowserRouter, Switch, Route, Redirect, useHistory } from 'react-router-dom';
+import RegionSheet          from './RegionSheet';
+
 
 const MapSelector = (props) =>{
     const auth = props.user === null ? false : true;
@@ -22,6 +25,9 @@ const MapSelector = (props) =>{
 	const [AddMap] 				= useMutation(mutations.ADD_MAP);
 	const [RenameMap] 			= useMutation(mutations.RENAME_MAP);
 	const [DeleteMap]			= useMutation(mutations.DELETE_MAP);
+	const [mapSelect, toggleMapSelect] = useState(true);
+	const [currentRegion, setCurrentRegion] = useState({})
+    let history = useHistory();
 
 	let maplist = [];
 
@@ -77,7 +83,11 @@ const MapSelector = (props) =>{
 		toggleShowAccount(!showAccount);
 	};
 
-
+	const handleSelectMap = (region) =>{
+		toggleMapSelect(false);
+		setCurrentRegion(region)
+		history.push("/map/"+region.name);
+	}
 
     return(
         <WLayout wLayout="header">
@@ -98,7 +108,9 @@ const MapSelector = (props) =>{
 				</WNavbar>
 			</WLHeader>
 
-			{!showAccount &&
+			{mapSelect ?
+
+			!showAccount &&
             <WLMain>
 
 				<div className='yourMapRed'></div>
@@ -107,7 +119,7 @@ const MapSelector = (props) =>{
 					{	
 						maplist.map((value, index) =>(
 						<MapEntry
-								value={value} renameMap={renameMap} deleteMap={deleteMap}
+								value={value} renameMap={renameMap} deleteMap={deleteMap} handleSelectMap={handleSelectMap}
 							/>
 						))
 					}
@@ -121,13 +133,23 @@ const MapSelector = (props) =>{
 				</div >
 
 			</WLMain>
-			}
+			
+			: <>
+			<Route
+			path={"/map/"+currentRegion.name}
+			name={"map_"+currentRegion.name}
+			render={() => 
+			<RegionSheet region={currentRegion} toggleMap={toggleMapSelect} showAccount={showAccount} />}
+			>
+			</Route></>}
+			
 
 			{
 				showAccount && (<UpdateAccount fetchUser={props.fetchUser} setShowUpdate={setShowUpdate} user={props.user}/>)
 			}
 
             </WLayout>
+			
     );
 
 }
