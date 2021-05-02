@@ -297,14 +297,16 @@ html {
     // height: 51%;
     display: flex;
 }
-.map-entry{
+.map-entry, .map-entry-edit{
     margin-top: 5%;
     margin-bottom: -6%;
     border-bottom: 10px;
     height: 10%;
 }
 
-.map-entry:hover{
+
+
+.map-entry:hover, .map-entry-edit{
     background-color: lightcoral;
 }
 
@@ -315,6 +317,10 @@ html {
     height: 100%;
     display: flex;
     align-items: center;
+}
+
+.map-entry-input{
+    width: 100%;
 }
 
 .map-entry-delete{

@@ -15,16 +15,19 @@ const MapEntry = (props) => {
     const handleDelete = () =>{
         props.deleteMap(props.value._id);
     }
-    // onDoubleClick={toggleEdit(!editing)}
+
+    const handleDblClick = () =>{
+        toggleEdit(true)
+    }
     return(
-        <WRow className='map-entry'>
-            <WCol size='9' className='map-entry-name'  >
+        <WRow className={!editing ? 'map-entry' : 'map-entry-edit'}>
+            <WCol size='9' className='map-entry-name'>
                     {
                         editing ?
-                        <WInput className='map-entry-input' onBlur={handleRename} autoFocus={true} defaultValue={value} 
+                        <WInput className='map-entry-input' onBlur={handleRename} autoFocus={true} defaultValue={props.value.name} 
                             type='text'/>
                         :
-                        <WRow className='map-entry-text' >{value}</WRow>
+                        <WRow className='map-entry-text' onDoubleClick={handleDblClick} >{value}</WRow>
                     }
             </WCol>
 

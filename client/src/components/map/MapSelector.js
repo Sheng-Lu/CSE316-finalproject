@@ -51,7 +51,7 @@ const MapSelector = (props) =>{
 	}
 
 	const renameMap = async(_id, newName) =>{
-		const {data} = await RenameMap({variables: {_id:_id, newName:newName}});
+		const {data} = await RenameMap({variables: {_id:_id, newName:newName}, refetchQueries: [{query: GET_DB_MAPS}]});
 		return data;
 	}
 
