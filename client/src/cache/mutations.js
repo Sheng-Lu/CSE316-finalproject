@@ -58,3 +58,15 @@ mutation AddMap($map: MapInput!) {
 	}
 }
 `;
+
+export const RENAME_MAP =  gql`
+mutation RenameMap($_id: String!, $newName: String!) {
+	renameMap(_id: $_id, newName: $newName)
+}
+`;
+
+export const DELETE_MAP = gql`
+	mutation DeleteMap($_id: String!) {
+		deleteMap(_id: $_id)
+	}
+`;

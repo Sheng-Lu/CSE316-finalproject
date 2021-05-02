@@ -34,14 +34,24 @@ module.exports = {
 			if(updated){
 				return newMap;
 			}
-			
+			return;
 		},
 
 		
-		// renameMap: async(_, args) =>{
-		// 	const {newName, _id} = args;
-		// 	const id = new ObjectId(_id);
-		// 	const updated = await Map.updateOne({_id: id}, {})
-		// }
+		renameMap: async(_, args) =>{
+			const {_id, newName} = args;
+			const id = new ObjectId(_id);
+			const updated = await Map.updateOne({_id: id}, {name: newName})
+			if(updated) return newName;
+			else return "";
+		},
+
+		deleteMap: async(_, args) =>{
+			const { _id } = args;
+			const objectId = new ObjectId(_id);
+			const deleted = await Map.deleteOne({_id: objectId});
+			if(deleted) return true;
+			else return false;
+		}
 	}
 }

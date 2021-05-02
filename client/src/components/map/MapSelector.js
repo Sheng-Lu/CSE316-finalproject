@@ -20,6 +20,8 @@ const MapSelector = (props) =>{
 	const [showAccount, toggleShowAccount]	= useState(false);
 
 	const [AddMap] 				= useMutation(mutations.ADD_MAP);
+	const [RenameMap] 			= useMutation(mutations.RENAME_MAP);
+	const [DeleteMap]			= useMutation(mutations.DELETE_MAP);
 
 	let maplist = [];
 
@@ -46,6 +48,15 @@ const MapSelector = (props) =>{
 		if(data){
 			let temp = data.addMap;
 		}
+	}
+
+	const renameMap = async(_id, newName) =>{
+		const {data} = await RenameMap({variables: {_id:_id, newName:newName}});
+		return data;
+	}
+
+	const deleteMap = async(_id) =>{
+		DeleteMap({ variables: { _id: _id }, refetchQueries: [{ query: GET_DB_MAPS }] });
 	}
 
 	const setShowLogin = () => {
@@ -96,7 +107,7 @@ const MapSelector = (props) =>{
 					{	
 						maplist.map((value, index) =>(
 						<MapEntry
-								value={value}
+								value={value} renameMap={renameMap} deleteMap={deleteMap}
 							/>
 						))
 					}

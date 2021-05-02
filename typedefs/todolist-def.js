@@ -24,6 +24,8 @@ const typeDefs = gql `
 
 	extend type Mutation {
 		addMap(map: MapInput!): Map
+		renameMap(_id: String!, newName: String!): String
+		deleteMap(_id: String!): Boolean
 	}
 
 	input MapInput{
