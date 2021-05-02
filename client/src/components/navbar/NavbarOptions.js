@@ -2,26 +2,21 @@ import React                                from 'react';
 import { LOGOUT }                           from '../../cache/mutations';
 import { useMutation, useApolloClient }     from '@apollo/client';
 import { WButton, WNavItem }                from 'wt-frontend';
+import { useHistory } 		from "react-router-dom";
 
 const LoggedIn = (props) => {
     const client = useApolloClient();
 	const [Logout] = useMutation(LOGOUT);
-
+    let history = useHistory();
     const handleLogout = async (e) => {
         Logout();
         const { data } = await props.fetchUser();
         if (data) {
             let reset = await client.resetStore();
-            if (reset) props.setActiveList({});
+            // if (reset) props.setActiveList({});
+            history.push("/home");
         }
     };
-    const print = async()=>{
-        // const {data} = await props.fetchUser();
-        // if (data) {
-        //     console.log(data.getCurrentUser.firstName);
-        // }
-        console.log(props.name)
-    }
 
     return (
         <>

@@ -1,5 +1,6 @@
 import React 			from 'react';
 import Homescreen 		from './components/homescreen/Homescreen';
+import MapSelector		from './components/map/MapSelector';
 import { useQuery } 	from '@apollo/client';
 import * as queries 	from './cache/queries';
 import { jsTPS } 		from './utils/jsTPS';
@@ -27,8 +28,16 @@ const App = () => {
 					render={() => 
 						<Homescreen tps={transactionStack} fetchUser={refetch} user={user} refreshTps={refreshTps}/>
 					} 
-				/>
-				<Route/>
+				>
+				</Route>
+				<Route
+					path="/map"
+					name="map"
+					render={() => 
+						<MapSelector tps={transactionStack} fetchUser={refetch} user={user} refreshTps={refreshTps}/>
+					} 
+				>
+				</Route>
 			</Switch>
 		</BrowserRouter>
 	);

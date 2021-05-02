@@ -2,54 +2,43 @@ const { gql } = require('apollo-server');
 
 
 const typeDefs = gql `
-	type Todolist {
+	
+	
+	type Map {
 		_id: String!
 		name: String!
 		owner: String!
-		items: [Item]
-		sortRule: String!
-		sortDirection: Int!
+		region: [Region]
 	}
-	type Item {
+	type Region {
 		_id: String!
-		description: String!
-		due_date: String!
-		assigned_to: String!
-		completed:  Boolean!
+		name: String!
+		capital: String!
+		leader: String!
+		flag: String!
+		landmarks: [String]
 	}
 	extend type Query {
-		getAllTodos: [Todolist]
-		getTodoById(_id: String!): Todolist 
+		getAllMaps: [Map]
 	}
+
 	extend type Mutation {
-		addItem(item: ItemInput!, _id: String!, index: Int!): String
-		addTodolist(todolist: TodoInput!): Todolist
-		deleteItem(itemId: String!, _id: String!): [Item]		
-		deleteTodolist(_id: String!): Boolean
-		updateTodolistField(_id: String!, field: String!, value: String!): String
-		updateItemField(itemId: String!, _id: String!, field: String!, value: String!, flag: Int!): [Item]
-		reorderItems(itemId: String!, _id: String!, direction: Int!): [Item]
-		sortItems(_id: String!, criteria: String!): [Item]
+		addMap(map: MapInput!): Map
 	}
-	input FieldInput {
-		_id: String
-		field: String
-		value: String
-	}
-	input TodoInput {
+
+	input MapInput{
 		_id: String
 		name: String
 		owner: String
-		items: [ItemInput]
-		sortRule: String
-		sortDirection: Int
+		region: [RegionInput]
 	}
-	input ItemInput {
+	input RegionInput{
 		_id: String
-		description: String
-		due_date: String
-		assigned_to: String
-		completed:  Boolean
+		name: String
+		capital: String
+		leader: String
+		flag: String
+		landmarks: [String]
 	}
 `;
 

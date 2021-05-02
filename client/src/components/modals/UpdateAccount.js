@@ -37,7 +37,7 @@ const UpdateAccount = (props) => {
 	return (
 		<WModal className="signup-modal"  cover="true" visible={props.setShowUpdate}>
 			<WMHeader  className="modal-header" onClose={() => props.setShowUpdate(false)}>
-				Enter Updated Account Information
+				Update Account Information
 			</WMHeader>
 
 			{

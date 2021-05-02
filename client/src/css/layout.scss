@@ -241,3 +241,87 @@ html {
     margin-left : 35%;
     margin-right : 35%;
 }
+
+.yourMapRed{
+    display: block;
+    margin-top: 3%;
+    margin-left: auto;
+    margin-right: auto;
+    height: 2%;
+    width: 66%;
+    background-color: red;
+}
+
+.yourMapBlack{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    height: 6%;
+    width: 66%;
+    background-color: black;
+    text-align: center;
+    font-size: 25px;
+}
+
+.yourMapGlobe{
+    // float: right;
+    // margin-right: 17%;
+    width: 100%;
+    margin-bottom: .5%;
+    // height: 40%;
+}
+
+.yourMapLeft{
+    float: left;
+    margin-left: 17%;
+    height: 75%;
+    background-color: pink;
+    width: 33%;
+}
+
+.yourMapRight{
+    float: right;
+    margin-right: 17%;
+    height: 75%;
+    // background-color: pink;
+    width: 33%;
+}
+
+.yourMapButton{
+    margin-top: -1%;
+    background-color: red;
+    color: white;
+    text-align: center;
+    font-size: 21.5px;
+    // width: 33%;
+    // height: 51%;
+    display: flex;
+}
+.map-entry{
+    margin-top: 5%;
+    margin-bottom: -6%;
+    border-bottom: 10px;
+    height: 10%;
+}
+
+.map-entry:hover{
+    background-color: lightcoral;
+}
+
+.map-entry-name{
+    font-size: 150%;
+    font-weight: bold;
+    margin-left: 20%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.map-entry-delete{
+    display: flex;
+    align-items: center;
+}
+
+.map-delete{
+    background-color: transparent;
+}
