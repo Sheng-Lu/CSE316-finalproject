@@ -434,3 +434,29 @@ html {
     align-items: center;
     border: 1px solid;
 }
+
+.viewerLeft{
+    background-color: red;
+    height: 85%;
+    margin-right: 50%;
+    margin-top: 3%;
+    margin-left: 3%;
+}
+
+.viewer-region-name, .viewer-parent-name{
+    color: white;
+    font-size: 150%;
+    font-weight: bold;
+}
+
+.viewer-region-name-value{
+    margin-left: -5%;
+}
+
+.viewer-parent-name-value{
+    color: lightblue !important;
+}
+
+.viewer-parent-name-value:hover{
+    cursor: pointer;
+}

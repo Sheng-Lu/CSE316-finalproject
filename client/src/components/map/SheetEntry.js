@@ -17,9 +17,6 @@ const SheetEntry = (props) => {
     }
 
     return(
-        // <div>
-        //     {props.region.name}
-        // </div>
         <WRow>
             <WCol size='3' className='sheetCol' >
                 <WButton className='sheet-delete' >

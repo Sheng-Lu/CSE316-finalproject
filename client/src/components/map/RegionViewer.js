@@ -19,8 +19,39 @@ const RegionViewer = (props) =>{
     }
 
     return(
-        <div onClick={handleBackToSheet} >
-            {props.parent.name}
+        <div className='viewerLeft' >
+            <WRow>
+                <WCol size='1'>
+                    <WButton className='viewer-undo' hoverAnimation='lighten'
+                        span='true' clickAnimation='ripple-dark' >
+                        <i className="material-icons">undo</i>
+                    </WButton>
+                </WCol>
+                <WCol size='1'>
+                    <WButton className='viewer-redo' hoverAnimation='lighten'
+                        span='true' clickAnimation='ripple-dark' >
+                        <i className="material-icons">redo</i>
+                    </WButton>
+                </WCol>
+            </WRow>
+            <div> flag </div>
+            <WRow>
+                <WCol size='3' className='viewer-region-name' >
+                    Region Name: 
+                </WCol>
+                <WCol size='8' className='viewer-region-name-value viewer-region-name' >
+                    {props.region.name}
+                </WCol>
+            </WRow>
+            <WRow>
+                <WCol size='3' className='viewer-region-name' >
+                    Parent Name: 
+                </WCol>
+                <WCol size='8' className='viewer-region-name viewer-parent-name-value viewer-region-name-value' onClick={handleBackToSheet} >
+                    {props.region.name}
+                </WCol>
+            </WRow>
+
         </div>
     )
 
