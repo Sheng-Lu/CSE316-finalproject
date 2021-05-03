@@ -325,6 +325,11 @@ html {
     width: 100%;
 }
 
+.map-entry-text{
+    overflow: auto;
+    overflow: hidden;
+}
+
 .map-entry-delete{
     display: flex;
     align-items: center;
@@ -384,11 +389,17 @@ html {
     color:skyblue;
     font-weight: bold;
     font-size: 130%;
+    overflow: auto;
+    overflow: hidden;
+    width: 90%;
 }
 
 .navRegionName{
     font-weight: bold;
     font-size: 130%;
+    overflow: auto;
+    overflow: hidden;
+    width: 80%;
 }
 
 .spreadSheet-header{
@@ -435,18 +446,28 @@ html {
     border: 1px solid;
 }
 
+.regionViewer{
+    // display: flex;
+    // flex-direction: row;
+    // width: 100%;
+    // background-color: yellow;
+}
+
 .viewerLeft{
-    background-color: red;
+    // background-color: red;
     height: 85%;
-    margin-right: 50%;
-    margin-top: 3%;
-    margin-left: 3%;
+    // width: 47%;
+    margin-right: 10%;
+    margin-top: 6%;
+    margin-left: 6%;
 }
 
 .viewer-region-name, .viewer-parent-name{
     color: white;
     font-size: 150%;
     font-weight: bold;
+    display: flex;
+    align-items: center;
 }
 
 .viewer-region-name-value{
@@ -455,8 +476,55 @@ html {
 
 .viewer-parent-name-value{
     color: lightblue !important;
+    overflow: auto;
+    overflow: hidden;
 }
 
 .viewer-parent-name-value:hover{
     cursor: pointer;
+}
+
+.viewerRight{
+    // background-color: blue;
+    height: 85%;
+    margin-left: 10%;
+    margin-top: 6%;
+    margin-right: 6%;
+    // width: 47%;
+}
+
+.regionLandmarkTitle{
+    color: white;
+    font-size: 150%;
+    text-align: center;
+    font-weight: bold;
+}
+
+.viewer-redo, .viewer-undo{
+    color: white;
+    background-color: transparent;
+}
+
+.viewer-edit{
+    background-color: transparent;
+    color: white;
+}
+
+.viewerFlag{
+    background-color: white;
+    height: 30%;
+    width: 50%;
+}
+
+.viewer-transpant{
+    color: transparent;
+    background-color: transparent;
+    pointer-events: none;
+}
+
+.viewerLandmarkBackground{
+    background-color: black;
+    width: 85%;
+    margin-left: 10%;
+    height: 95%;
 }

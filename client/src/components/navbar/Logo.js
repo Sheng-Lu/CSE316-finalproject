@@ -5,8 +5,9 @@ const Logo = (props) => {
 
     let history = useHistory();
     const handleReturnHome = () =>{
-        if(!props.mapSelect && props.regionSelect && props.auth){
+        if(!props.mapSelect && props.auth){
             props.toggleMap(true);
+            props.toggleRegion(true);
             history.push("/map");
         }
     }
