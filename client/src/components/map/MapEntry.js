@@ -6,12 +6,17 @@ import RegionSheet          from './RegionSheet';
 const MapEntry = (props) => {
 
     const value = props.value.name;
-    const [editing, toggleEdit] = useState(false);
+    const [editing, toggleEdit] = useState(props.newMap);
 
     const handleRename = (e) =>{
         toggleEdit(false);
         const newName = e.target.value ? e.target.value : 'untitled';
         props.renameMap(props.value._id, newName);
+        let temp = props.newMap;
+        props.toggleNewMap(false);
+        // if(temp){
+        //     props.handleSelectMap(props.value)
+        // }
     }
 
     const handleDelete = () =>{

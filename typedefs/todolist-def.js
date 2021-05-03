@@ -20,6 +20,7 @@ const typeDefs = gql `
 	}
 	extend type Query {
 		getAllMaps: [Map]
+		getMapById: Map
 	}
 
 	extend type Mutation {

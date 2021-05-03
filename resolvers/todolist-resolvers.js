@@ -8,7 +8,6 @@ const Sorting = require('../utils/sorting')
 
 module.exports = {
 	Query: {
-		
 
 		getAllMaps: async (_, __, { req }) => {
 			const _id = new ObjectId(req.userId);
@@ -18,6 +17,14 @@ module.exports = {
 				return (map);
 			}
 		},
+		getMapById : async (_, args) => {
+			const { _id } = args;
+			const objectId = new ObjectId(_id);
+			const map = await Map.findOne({_id: objectId});
+			if(map) return map;
+			else return ({});
+		},
+
 	},
 	Mutation: {
 		addMap: async(_, args) =>{

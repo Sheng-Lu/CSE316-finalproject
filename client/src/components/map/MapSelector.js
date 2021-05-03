@@ -27,6 +27,7 @@ const MapSelector = (props) =>{
 	const [DeleteMap]			= useMutation(mutations.DELETE_MAP);
 	const [mapSelect, toggleMapSelect] = useState(true);
 	const [currentRegion, setCurrentRegion] = useState({})
+	const [newMap, toggleNewMap]		= useState(false);
     let history = useHistory();
 
 	let maplist = [];
@@ -52,6 +53,7 @@ const MapSelector = (props) =>{
 			region: []
 		}
 		const {data} = await AddMap({variables: {map: nMap}, refetchQueries: [{query: GET_DB_MAPS}] });
+		toggleNewMap(true);
 		if(data){
 			let temp = data.addMap;
 		}
@@ -124,7 +126,8 @@ const MapSelector = (props) =>{
 					{	
 						maplist.map((value, index) =>(
 						<MapEntry
-								value={value} renameMap={renameMap} deleteMap={deleteMap} handleSelectMap={handleSelectMap}
+								value={value} renameMap={renameMap} deleteMap={deleteMap} 
+								handleSelectMap={handleSelectMap} newMap={newMap} toggleNewMap={toggleNewMap}
 							/>
 						))
 					}

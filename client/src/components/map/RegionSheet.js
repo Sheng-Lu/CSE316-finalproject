@@ -3,7 +3,7 @@ import { useMutation, useQuery } 		from '@apollo/client';
 import Logo 							from '../navbar/Logo';
 import UpdateAccount					from '../modals/UpdateAccount';
 import NavbarOptions 					    from '../navbar/NavbarOptions';
-import { GET_DB_MAPS } 				from '../../cache/queries';
+import { GET_DB_MAPS, GET_MAP_ID} 				from '../../cache/queries';
 import { WNavbar, WSidebar, WNavItem, WRow, WButton, WCol } 	from 'wt-frontend';
 import { WLayout, WLHeader, WLMain, WLSide } from 'wt-frontend';
 import SheetEntry							from './SheetEntry';
@@ -16,7 +16,18 @@ const RegionSheet = (props) =>{
     const [RenameMap] 			= useMutation(mutations.RENAME_MAP);
     const [AddRegion]           = useMutation(mutations.ADD_REGION);
 
+    // const { loading, error, data, refetch } = useQuery(GET_MAP_ID, { variables: { _id: props.map._id } });
+    const { loading, error, data, refetch } = useQuery(GET_DB_MAPS);
+
     let regionList = props.map.region;
+
+    if(data) { 
+        for(let map of data.getAllMaps){
+			if(map._id == props.map._id){
+                regionList = map.region;
+            }
+		}
+	}
 
     const handleReturnHome = () =>{
         props.toggleMap(true);
@@ -38,7 +49,7 @@ const RegionSheet = (props) =>{
             landmarks: []
 		}
         const {data} = await AddRegion({variables: {_id:props.map._id, region:nRegion}, refetchQueries: [{query: GET_DB_MAPS}]});
-        props.refetch();
+
         return data;
     }
 
