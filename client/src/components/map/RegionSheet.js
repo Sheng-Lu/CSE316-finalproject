@@ -6,7 +6,7 @@ import NavbarOptions 					    from '../navbar/NavbarOptions';
 import { GET_DB_MAPS } 				from '../../cache/queries';
 import { WNavbar, WSidebar, WNavItem, WRow, WButton, WCol } 	from 'wt-frontend';
 import { WLayout, WLHeader, WLMain, WLSide } from 'wt-frontend';
-import MapEntry							from './MapEntry';
+import SheetEntry							from './SheetEntry';
 import * as mutations 					from '../../cache/mutations';
 import { BrowserRouter, Switch, Route, Redirect, useHistory } from 'react-router-dom';
 
@@ -15,6 +15,9 @@ const RegionSheet = (props) =>{
 
     const [RenameMap] 			= useMutation(mutations.RENAME_MAP);
     const [AddRegion]           = useMutation(mutations.ADD_REGION);
+
+    let regionList = props.map.region;
+
     const handleReturnHome = () =>{
         props.toggleMap(true);
         history.push("/map");
@@ -91,8 +94,11 @@ const RegionSheet = (props) =>{
                 </WCol>
             </WRow>
 
-            
-
+            {
+                regionList.map((value, index) =>(
+                    <SheetEntry region={value} />
+                ))
+            }
 
         
         </div>
