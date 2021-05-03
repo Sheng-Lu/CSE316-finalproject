@@ -1,4 +1,4 @@
-import React, { useState } 	from 'react';
+import React, { useState, useEffect } 	from 'react';
 import { useMutation, useQuery } 		from '@apollo/client';
 import Logo 							from '../navbar/Logo';
 import UpdateAccount					from '../modals/UpdateAccount';
@@ -12,8 +12,9 @@ import * as mutations 					from '../../cache/mutations';
 import RedGlobe							from '../../image/2554416-world-map-red-globe-america-europe-and-africa.jpg';
 import WButton from 'wt-frontend/build/components/wbutton/WButton';
 
-import { BrowserRouter, Switch, Route, Redirect, useHistory } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect, useHistory, useLocation } from 'react-router-dom';
 import RegionSheet          from './RegionSheet';
+import RegionViewer from './RegionViewer';
 
 
 const MapSelector = (props) =>{
@@ -26,9 +27,14 @@ const MapSelector = (props) =>{
 	const [RenameMap] 			= useMutation(mutations.RENAME_MAP);
 	const [DeleteMap]			= useMutation(mutations.DELETE_MAP);
 	const [mapSelect, toggleMapSelect] = useState(true);
-	const [currentRegion, setCurrentRegion] = useState({})
+	const [regionSelect, toggleRegionSelect] = useState(true);
+	const [currentMap, setCurrentMap] = useState({})
+	const [currentRegion, setCurrentRegion] = useState({});
+	const [currentRegionParent, setCurrentRegionParent] = useState({});
 	const [newMap, toggleNewMap]		= useState(false);
     let history = useHistory();
+	const location = useLocation();
+
 
 	let maplist = [];
 
@@ -88,8 +94,16 @@ const MapSelector = (props) =>{
 
 	const handleSelectMap = (region) =>{
 		toggleMapSelect(false);
-		setCurrentRegion(region)
+		setCurrentMap(region)
 		history.push("/map/"+region._id);
+	}
+
+	const handleSelectRegion = (region, parent) =>{
+		toggleMapSelect(false);
+		toggleRegionSelect(false);
+		setCurrentRegion(region);
+		setCurrentRegionParent(parent);
+		history.push("/map/"+currentMap._id+'/'+region._id);
 	}
 
     return(
@@ -98,12 +112,12 @@ const MapSelector = (props) =>{
 				<WNavbar color="colored">
 					<ul>
 						<WNavItem>
-							<Logo className='logo' toggleMap={toggleMapSelect} mapSelect={mapSelect} />
+							<Logo className='logo' toggleMap={toggleMapSelect} mapSelect={mapSelect} regionSelect={regionSelect} auth={auth} />
 						</WNavItem>
 					</ul>
 					<ul>
 						{mapSelect ? <div></div> 
-						:<div className="navRegionName" >{currentRegion.name}</div>  }
+						:<div className="navRegionName" >{currentMap.name}</div>  }
 					</ul>
 					<ul>
 						<NavbarOptions
@@ -115,7 +129,7 @@ const MapSelector = (props) =>{
 				</WNavbar>
 			</WLHeader>
 
-			{mapSelect ?
+			{ mapSelect ?
 
 			!showAccount &&
             <WLMain>
@@ -142,16 +156,30 @@ const MapSelector = (props) =>{
 
 			</WLMain>
 			
-			: <>
+			: <> {regionSelect ? 
 			<Route
-			path={"/map/"+currentRegion._id}
-			name={"map_"+currentRegion._id}
+			path={"/map/"+currentMap._id}
+			name={"map_"+currentMap._id}
 			render={() => 
-			<RegionSheet map={currentRegion} toggleMap={toggleMapSelect} showAccount={showAccount} refetch={refetch} />}
+			<RegionSheet map={currentMap} toggleMap={toggleMapSelect} showAccount={showAccount} 
+				refetch={refetch} handleSelectRegion={handleSelectRegion} />}
 			>
-			</Route></>}
+			</Route>
+
+			: 
+			<Route 
+				path={"/map/"+currentMap._id+'/'+currentRegion._id}
+				name={"region_"+currentMap._id+'_'+currentRegion._id}
+				render={() => 
+				<RegionViewer toggleRegion={toggleRegionSelect} parent={currentRegionParent} region={currentRegion} />}
+			>
+			</Route>
+			
+			}
 			
 
+			</>}
+			
 			{
 				showAccount && (<UpdateAccount fetchUser={props.fetchUser} setShowUpdate={setShowUpdate} user={props.user}/>)
 			}

@@ -12,6 +12,10 @@ const SheetEntry = (props) => {
 
     let temp = landmark + " ...";
 
+    const handleLandmarkClick = () =>{
+        props.handleSelectRegion(props.region, props.parent)
+    }
+
     return(
         // <div>
         //     {props.region.name}
@@ -37,7 +41,7 @@ const SheetEntry = (props) => {
                 <div className='sheetEntry' >{props.region.flag}</div>
             </WCol>
 
-            <WCol size='3' className='sheetCol'>
+            <WCol size='3' className='sheetCol' onClick={handleLandmarkClick} >
                 <div className='sheetEntry' >{temp}</div>
             </WCol>
 

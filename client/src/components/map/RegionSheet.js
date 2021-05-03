@@ -25,6 +25,7 @@ const RegionSheet = (props) =>{
         for(let map of data.getAllMaps){
 			if(map._id == props.map._id){
                 regionList = map.region;
+                break;
             }
 		}
 	}
@@ -108,7 +109,7 @@ const RegionSheet = (props) =>{
             <div className='sheetContent'>
             {
                 regionList.map((value, index) =>(
-                    <SheetEntry region={value} />
+                    <SheetEntry region={value} handleSelectRegion={props.handleSelectRegion} parent={props.map} />
                 ))
             }
             </div>
