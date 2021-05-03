@@ -41,6 +41,7 @@ const MapSelector = (props) =>{
 		for(let map of data.getAllMaps){
 			maplist.push(map);
 		}
+		
 	}
 
 	const addNewMap = async () =>{
@@ -86,7 +87,7 @@ const MapSelector = (props) =>{
 	const handleSelectMap = (region) =>{
 		toggleMapSelect(false);
 		setCurrentRegion(region)
-		history.push("/map/"+region.name);
+		history.push("/map/"+region._id);
 	}
 
     return(
@@ -140,10 +141,10 @@ const MapSelector = (props) =>{
 			
 			: <>
 			<Route
-			path={"/map/"+currentRegion.name}
-			name={"map_"+currentRegion.name}
+			path={"/map/"+currentRegion._id}
+			name={"map_"+currentRegion._id}
 			render={() => 
-			<RegionSheet map={currentRegion} toggleMap={toggleMapSelect} showAccount={showAccount} />}
+			<RegionSheet map={currentRegion} toggleMap={toggleMapSelect} showAccount={showAccount} refetch={refetch} />}
 			>
 			</Route></>}
 			

@@ -38,6 +38,7 @@ const RegionSheet = (props) =>{
             landmarks: []
 		}
         const {data} = await AddRegion({variables: {_id:props.map._id, region:nRegion}, refetchQueries: [{query: GET_DB_MAPS}]});
+        props.refetch();
         return data;
     }
 
@@ -93,13 +94,13 @@ const RegionSheet = (props) =>{
                     <div className='sheet-header'>Landmarks</div>
                 </WCol>
             </WRow>
-
+            <div className='sheetContent'>
             {
                 regionList.map((value, index) =>(
                     <SheetEntry region={value} />
                 ))
             }
-
+            </div>
         
         </div>
     );
