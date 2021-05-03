@@ -366,3 +366,41 @@ html {
 .region-add{
     color: greenyellow;
 }
+
+.regionNameSheetCol, .sheetNameCol{
+    display: flex;
+    align-items: center;
+}
+
+.regionNameSheet{
+    color: white;
+    padding-left: 60%;
+    text-align: right;
+    font-weight: bold;
+    font-size: 130%;
+}
+
+.sheetName{
+    color:skyblue;
+    font-weight: bold;
+    font-size: 130%;
+}
+
+.navRegionName{
+    font-weight: bold;
+    font-size: 130%;
+}
+
+.spreadSheet-header{
+    background-color: rgb(208,47,47);
+    height: 8%;
+    
+}
+
+.sheet-header{
+    color: white;
+    font-weight: bold;
+    font-size: 130%;
+    text-align: center;
+    cursor: pointer;
+}

@@ -13,9 +13,29 @@ import { BrowserRouter, Switch, Route, Redirect, useHistory } from 'react-router
 const RegionSheet = (props) =>{
     let history = useHistory();
 
+    const [RenameMap] 			= useMutation(mutations.RENAME_MAP);
+    const [AddRegion]           = useMutation(mutations.ADD_REGION);
     const handleReturnHome = () =>{
         props.toggleMap(true);
         history.push("/map");
+    }
+
+    const renameMap = async(_id, newName) =>{
+		const {data} = await RenameMap({variables: {_id:_id, newName:newName}, refetchQueries: [{query: GET_DB_MAPS}]});
+		return data;
+	}
+
+    const handleAddRegion = async () =>{
+        let nRegion = {
+			_id : '',
+			name: 'untitled',
+			capital: 'capital',
+			leader: 'leader',
+            flag: 'flag',
+            landmarks: []
+		}
+        const {data} = await AddRegion({variables: {_id:props.map._id, region:nRegion}, refetchQueries: [{query: GET_DB_MAPS}]});
+        return data;
     }
 
     return(
@@ -23,7 +43,8 @@ const RegionSheet = (props) =>{
         <div className='spreadSheet'> 
             <WRow className='spreadSheet-title'>
                 <WCol size='1'>
-                    <WButton className='region-add' hoverAnimation='lighten' span='true' clickAnimation='ripple-dark'>
+                    <WButton className='region-add' hoverAnimation='lighten' span='true' clickAnimation='ripple-dark'
+                        onClick={handleAddRegion} >
                         <i className="material-icons">add_box</i>
                     </WButton>
                 </WCol>
@@ -37,8 +58,12 @@ const RegionSheet = (props) =>{
                         <i className="material-icons">redo</i>
                     </WButton>
                 </WCol>
-                <WCol size='8'>
-                    <div> {props.region.name}</div>
+                <WCol size='4' className='regionNameSheetCol' >
+                    <div className='regionNameSheet'> Region Name: </div>
+                    
+                </WCol>
+                <WCol size='4' className='sheetNameCol'>
+                    <div className='sheetName'> {props.map.name}</div>
                 </WCol>
                 <WCol size='1'>
                     <WButton className='region-home' onClick={handleReturnHome} hoverAnimation='lighten'
@@ -47,6 +72,27 @@ const RegionSheet = (props) =>{
                     </WButton>
                 </WCol>
             </WRow>
+
+            <WRow className='spreadSheet-header'>
+                <WCol size='3'>
+                    <div className='sheet-header' >Name</div>
+                </WCol>
+                <WCol size='2'>
+                    <div className='sheet-header'>Capital</div>
+                </WCol>
+                <WCol size='2'>
+                    <div className='sheet-header'>Leader</div>
+                </WCol>
+                <WCol size='2'>
+                    <div className='sheet-header'>Flag</div>
+                </WCol>
+                <WCol size='3'>
+                    <div className='sheet-header'>Landmarks</div>
+                </WCol>
+            </WRow>
+
+            
+
 
         
         </div>

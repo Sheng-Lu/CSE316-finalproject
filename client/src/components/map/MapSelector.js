@@ -99,6 +99,10 @@ const MapSelector = (props) =>{
 						</WNavItem>
 					</ul>
 					<ul>
+						{mapSelect ? <div></div> 
+						:<div className="navRegionName" >{currentRegion.name}</div>  }
+					</ul>
+					<ul>
 						<NavbarOptions
 							fetchUser={props.fetchUser} 	auth={auth} 
 							setShowCreate={setShowCreate} 	setShowLogin={setShowLogin}
@@ -139,7 +143,7 @@ const MapSelector = (props) =>{
 			path={"/map/"+currentRegion.name}
 			name={"map_"+currentRegion.name}
 			render={() => 
-			<RegionSheet region={currentRegion} toggleMap={toggleMapSelect} showAccount={showAccount} />}
+			<RegionSheet map={currentRegion} toggleMap={toggleMapSelect} showAccount={showAccount} />}
 			>
 			</Route></>}
 			

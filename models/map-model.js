@@ -15,10 +15,7 @@ const mapSchema = new Schema(
             type: String,
             required: true
         },
-        region: {
-            type: [Region],
-            required: true
-        },
+        region: [Region],
     },
         {timestamp: true}
 
