@@ -19,7 +19,9 @@ const RegionViewer = (props) =>{
     }
 
     return(
-        <div className='viewerLeft' >
+        <WRow className='regionViewer'>
+
+        <WCol size='6' className='viewerLeft' >
             <WRow>
                 <WCol size='1'>
                     <WButton className='viewer-undo' hoverAnimation='lighten'
@@ -34,25 +36,89 @@ const RegionViewer = (props) =>{
                     </WButton>
                 </WCol>
             </WRow>
-            <div> flag </div>
+            <div className='viewerFlag' > flag </div>
             <WRow>
-                <WCol size='3' className='viewer-region-name' >
+                <WCol size='4' className='viewer-region-name' >
                     Region Name: 
                 </WCol>
-                <WCol size='8' className='viewer-region-name-value viewer-region-name' >
+                <WCol size='4' className='viewer-region-name-value viewer-region-name' >
                     {props.region.name}
                 </WCol>
-            </WRow>
-            <WRow>
-                <WCol size='3' className='viewer-region-name' >
-                    Parent Name: 
-                </WCol>
-                <WCol size='8' className='viewer-region-name viewer-parent-name-value viewer-region-name-value' onClick={handleBackToSheet} >
-                    {props.region.name}
+                <WCol size='.01'>
+                    <WButton className='viewer-transpant' >
+                        <i className="material-icons">circle</i>
+                    </WButton>
                 </WCol>
             </WRow>
 
-        </div>
+            <WRow>
+                <WCol size='4' className='viewer-region-name' >
+                    Parent Name: 
+                </WCol>
+                <WCol size='4' className='viewer-region-name viewer-parent-name-value viewer-region-name-value' onClick={handleBackToSheet} >
+                    {props.parent.name}
+                </WCol>
+                <WCol size='1'>
+                    <WButton className='viewer-edit' hoverAnimation='lighten'
+                        span='true' clickAnimation='ripple-dark' >
+                        <i className="material-icons">edit</i>
+                    </WButton>
+                </WCol>
+                
+            </WRow>
+
+            <WRow>
+                <WCol size='4' className='viewer-region-name' >
+                    Region Capital: 
+                </WCol>
+                <WCol size='4' className='viewer-region-name-value viewer-region-name' >
+                    {props.region.capital}
+                </WCol>
+                <WCol size='.01'>
+                    <WButton className='viewer-transpant' >
+                        <i className="material-icons">circle</i>
+                    </WButton>
+                </WCol>
+            </WRow>
+
+            <WRow>
+                <WCol size='4' className='viewer-region-name' >
+                    Region Leader: 
+                </WCol>
+                <WCol size='4' className='viewer-region-name-value viewer-region-name' >
+                    {props.region.leader}
+                </WCol>
+                <WCol size='.01'>
+                    <WButton className='viewer-transpant' >
+                        <i className="material-icons">circle</i>
+                    </WButton>
+                </WCol>
+            </WRow>
+
+            <WRow>
+                <WCol size='4' className='viewer-region-name' >
+                    # of subRegions: 
+                </WCol>
+                <WCol size='4' className='viewer-region-name-value viewer-region-name' >
+                    {}
+                </WCol>
+                <WCol size='.01'>
+                    <WButton className='viewer-transpant' >
+                        <i className="material-icons">circle</i>
+                    </WButton>
+                </WCol>
+            </WRow>
+        </WCol>
+
+        <WCol size='6' className='viewerRight'>
+            <div className='regionLandmarkTitle' >
+                Region Landmarks:
+            </div>
+            <div className='viewerLandmarkBackground'>
+
+            </div>
+        </WCol>
+        </WRow>
     )
 
 }

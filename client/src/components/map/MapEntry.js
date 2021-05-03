@@ -40,13 +40,13 @@ const MapEntry = (props) => {
                 </WButton>
             </WCol>
 
-            <WCol size='9' className='map-entry-name' onClick={handleClick}>
+            <WCol size='9' className='map-entry-name' >
                     {
                         editing ?
-                        <WInput className='map-entry-input' onBlur={handleRename} autoFocus={true} defaultValue={props.value.name} 
-                            type='text'/>
+                        <WInput className='map-entry-input' onBlur={handleRename} autoFocus={true}
+                            defaultValue={props.value.name} type='text'/>
                         :
-                        <WRow className='map-entry-text' onClick={handleClick} >{value}</WRow>
+                        <div className='map-entry-text' onClick={handleClick} >{value}</div>
                     }
             </WCol>
 

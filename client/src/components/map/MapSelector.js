@@ -112,7 +112,8 @@ const MapSelector = (props) =>{
 				<WNavbar color="colored">
 					<ul>
 						<WNavItem>
-							<Logo className='logo' toggleMap={toggleMapSelect} mapSelect={mapSelect} regionSelect={regionSelect} auth={auth} />
+							<Logo className='logo' toggleMap={toggleMapSelect} mapSelect={mapSelect} 
+							regionSelect={regionSelect} auth={auth} toggleRegion={toggleRegionSelect}/>
 						</WNavItem>
 					</ul>
 					<ul>
