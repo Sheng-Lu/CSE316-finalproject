@@ -28,7 +28,9 @@ const MapEntry = (props) => {
     }
 
     const handleClick = () =>{
-        props.handleSelectMap(props.value)
+        if(!editing){
+            props.handleSelectMap(props.value)
+        }
     }
     return(
 
@@ -40,7 +42,7 @@ const MapEntry = (props) => {
                 </WButton>
             </WCol>
 
-            <WCol size='9' className='map-entry-name' >
+            <WCol size='9' className='map-entry-name' onClick={handleClick} >
                     {
                         editing ?
                         <WInput className='map-entry-input' onBlur={handleRename} autoFocus={true}

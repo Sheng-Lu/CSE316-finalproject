@@ -115,7 +115,20 @@ const RegionViewer = (props) =>{
                 Region Landmarks:
             </div>
             <div className='viewerLandmarkBackground'>
+            </div>
+            <div className='viewerLandmarkInput'>
+                <WRow>
+                    <WCol size='1'>
+                        <WButton className='viewerLandmarkInputAdd' >
+                            <i className="material-icons">add</i>
+                        </WButton>
+                    </WCol>
+                    <WCol size ='3'>
+                        <div className='viewerLandmarkInputAdd'>
 
+                        </div>
+                    </WCol>
+                </WRow>
             </div>
         </WCol>
         </WRow>
