@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { WButton, WInput, WRow, WCol, WNavItem} from 'wt-frontend';
 import { BrowserRouter, Switch, Route, Redirect, useHistory } from 'react-router-dom';
 
+
 const SheetEntry = (props) => {
 
     const landmark = "";
@@ -15,6 +16,8 @@ const SheetEntry = (props) => {
     const handleLandmarkClick = () =>{
         props.handleSelectRegion(props.region, props.parent)
     }
+
+    
 
     return(
         <WRow>
@@ -35,7 +38,9 @@ const SheetEntry = (props) => {
             </WCol>
 
             <WCol size='2' className='sheetCol'>
-                <div className='sheetEntry' >{props.region.flag}</div>
+                <div className='sheetEntry' >
+                    <img src={"/flag/" +props.region.name+ " Flag.png"} alt="No Flag Found" className='sheetFlag' />
+                </div>
             </WCol>
 
             <WCol size='3' className='sheetCol' onClick={handleLandmarkClick} >

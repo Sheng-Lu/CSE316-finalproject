@@ -36,7 +36,7 @@ const RegionViewer = (props) =>{
                     </WButton>
                 </WCol>
             </WRow>
-            <div className='viewerFlag' > flag </div>
+            <div className='viewerFlag' > <img src={"/flag/" +props.region.name+ " Flag.png"} alt="No Flag Found" className='flagViewer'/> </div>
             <WRow>
                 <WCol size='4' className='viewer-region-name' >
                     Region Name: 

@@ -511,8 +511,8 @@ html {
 }
 
 .viewerFlag{
-    background-color: white;
-    height: 30%;
+    // background-color: white;
+    height: 35%;
     width: 50%;
 }
 
@@ -545,4 +545,13 @@ html {
     background-color: lightgray;
     width: 50%;
     height: 100%;
+}
+
+.sheetFlag{
+    width: 30%;
+    padding-top: 2%;
+}
+
+.flagViewer{
+    width: 95%;
 }

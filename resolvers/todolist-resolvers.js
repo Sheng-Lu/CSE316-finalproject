@@ -73,6 +73,24 @@ module.exports = {
 			const updated = await Map.updateOne({_id: mapId}, {region: regList});
 			if(updated) return (region._id);
 			else return "not";
-		}
+		},
+
+		updateRegionSheetField: async (_, args) =>{
+			const { _id, regionId, field} = args;
+			let { value } = args
+			const mapId = new ObjectId(_id);
+			const found = await Map.findOne({_id: mapId});
+			let region = found.region;
+
+			region.map(region =>{
+				if(region._id.toString() === regionId){
+					region[field] = value;
+				}
+			});
+
+			const updated = await Map.updateOne({_id: mapId}, { region: region });
+			if(updated) return (mapId);
+			else return (found.region);
+		},
 	}
 }

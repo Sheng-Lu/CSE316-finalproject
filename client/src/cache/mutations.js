@@ -76,3 +76,16 @@ mutation AddRegion($_id: String!, $region: RegionInput!) {
 	addRegion(_id: $_id, region: $region)
 }
 `;
+
+export const UPDATE_REGION_SHEET_FIELD = gql`
+	mutation UpdateRegionSheetField($_id: String!, $regionId: String!, $field: String!, $value: String!) {
+		updateRegionSheetField(_id: $_id, regionId: $regionId, field: $field, value: $value) {
+			_id
+			name
+			capital
+			leader
+			flag
+			landmarks
+		}
+	}
+`;
