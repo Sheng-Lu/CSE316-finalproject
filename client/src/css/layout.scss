@@ -435,8 +435,18 @@ html {
 .sheet-delete{
     background-color: transparent;
     color: red;
-    margin-left: -50%;
-    margin-right: 20%;
+}
+
+.sheetCol-name{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.sheetEntry-name{
+    align-self: center;
+    justify-self: right;
+    width: 100%;
 }
 
 .sheetCol{
@@ -548,7 +558,7 @@ html {
 }
 
 .sheetFlag{
-    width: 30%;
+    width: 20%;
     padding-top: 2%;
 }
 

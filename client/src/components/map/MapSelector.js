@@ -26,6 +26,7 @@ const MapSelector = (props) =>{
 	const [AddMap] 				= useMutation(mutations.ADD_MAP);
 	const [RenameMap] 			= useMutation(mutations.RENAME_MAP);
 	const [DeleteMap]			= useMutation(mutations.DELETE_MAP);
+
 	const [mapSelect, toggleMapSelect] = useState(true);
 	const [regionSelect, toggleRegionSelect] = useState(true);
 	const [currentMap, setCurrentMap] = useState({})
@@ -35,6 +36,7 @@ const MapSelector = (props) =>{
     let history = useHistory();
 	const location = useLocation();
 
+	const [UpdateRegionSheetField] = useMutation(mutations.UPDATE_REGION_SHEET_FIELD);
 
 	let maplist = [];
 
@@ -106,6 +108,10 @@ const MapSelector = (props) =>{
 		history.push("/map/"+currentMap._id+'/'+region._id);
 	}
 
+	const handleChangeRegionSheet = (id, regionId, field, value) =>{
+		UpdateRegionSheetField({ variables: { _id: id, regionId:regionId, field: field, value: value}, refetchQueries: [{ query: GET_DB_MAPS }] });
+	}
+
     return(
         <WLayout wLayout="header">
 			<WLHeader>
@@ -163,7 +169,7 @@ const MapSelector = (props) =>{
 			name={"map_"+currentMap._id}
 			render={() => 
 			<RegionSheet map={currentMap} toggleMap={toggleMapSelect} showAccount={showAccount} 
-				refetch={refetch} handleSelectRegion={handleSelectRegion} />}
+				refetch={refetch} handleSelectRegion={handleSelectRegion} handleChangeRegionSheet={handleChangeRegionSheet} />}
 			>
 			</Route>
 

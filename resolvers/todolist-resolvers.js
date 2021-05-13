@@ -89,7 +89,7 @@ module.exports = {
 			});
 
 			const updated = await Map.updateOne({_id: mapId}, { region: region });
-			if(updated) return (mapId);
+			if(updated) return (region);
 			else return (found.region);
 		},
 	}

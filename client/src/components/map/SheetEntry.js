@@ -17,16 +17,36 @@ const SheetEntry = (props) => {
         props.handleSelectRegion(props.region, props.parent)
     }
 
-    
+    const [editingName, toggleName] = useState(false);
+    const [editingCapital, toggleCapital] = useState(false);
+    const [editingLeader, toggleLeader] = useState(false);
+
+    const handleEditName = (e) =>{
+        toggleName(false);
+        const newName = e.target.value ? e.target.value : 'untitled';
+        if(newName !== props.region.name){
+            props.handleChangeRegionSheet(props.parent._id, props.region._id, 'name', newName);
+        }
+    }
 
     return(
         <WRow>
             <WCol size='3' className='sheetCol' >
+                <div className='sheetCol-name'>
                 <WButton className='sheet-delete' >
                         <i className="material-icons">close</i>
                 </WButton>
-                <div className='sheetEntry' > 
-                    {props.region.name}</div>
+                {
+                    editingName ?
+                    <WInput 
+                        className='sheetEntry-input' onBlur={handleEditName}
+                        autoFocus={true} defaultValue={props.region.name} type='text'
+                        inputClass="table-input-class"
+                    />
+                    : <div className='sheetEntry sheetEntry-name' onClick={() => toggleName(true)} > 
+                        {props.region.name}</div>
+                }
+                </div>
             </WCol>
 
             <WCol size='2' className='sheetCol'>
