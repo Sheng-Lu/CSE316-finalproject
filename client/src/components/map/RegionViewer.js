@@ -15,6 +15,7 @@ const RegionViewer = (props) =>{
 
     const handleBackToSheet = () =>{
         props.toggleRegion(true);
+        props.clearTps();
         history.push("/map/"+props.parent._id);
     }
 

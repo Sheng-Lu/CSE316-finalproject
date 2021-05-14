@@ -6,6 +6,7 @@ const Logo = (props) => {
     let history = useHistory();
     const handleReturnHome = () =>{
         if(props.auth){
+            props.clearTps();
             props.toggleMap(true);
             props.toggleRegion(true);
             history.push("/map");

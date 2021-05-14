@@ -62,13 +62,16 @@ module.exports = {
 		},
 
 		addRegion: async(_, args) =>{
-			const {_id, region} = args;
+			const {_id, region, index} = args;
 			const mapId = new ObjectId(_id);
 			const objectId = new ObjectId();
 			const found = await Map.findOne({_id: mapId});
 			region._id = objectId;
 			let regList = found.region;
-			regList.push(region);
+			
+			if(index < 0) regList.push(region);
+			else regList.splice(index, 0, region);
+			// regList.push(region);
 
 			const updated = await Map.updateOne({_id: mapId}, {region: regList});
 			if(updated) return (region._id);

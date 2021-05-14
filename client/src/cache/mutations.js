@@ -72,8 +72,8 @@ export const DELETE_MAP = gql`
 `;
 
 export const ADD_REGION = gql`
-mutation AddRegion($_id: String!, $region: RegionInput!) {
-	addRegion(_id: $_id, region: $region)
+mutation AddRegion($_id: String!, $region: RegionInput!, $index: Int!) {
+	addRegion(_id: $_id, region: $region, index: $index)
 }
 `;
 

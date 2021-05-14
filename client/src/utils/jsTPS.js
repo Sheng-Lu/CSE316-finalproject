@@ -36,20 +36,36 @@ export class SortRegion_Transaction extends jsTPS_Transaction{
     }
     async doTransaction() {
 		const { data } = await this.updateFunction({ variables: { _id: this.mapId, criteria:this.criteria, increasing: this.increasing }, refetchQueries: this.temp});
-        if(data) {
-            console.log(data)
-            return data;
-
-        }
+        return data;
     }
 
     async undoTransaction() {
 		const { data } = await this.updateFunction({ variables: { _id: this.mapId, criteria:this.criteria, increasing: !this.increasing }, refetchQueries: this.temp});
-        if(data) {
-            console.log(data)
-            return data;
-        }
+        return data;
 
+    }
+}
+
+export class AddRegion_Transaction extends jsTPS_Transaction{
+    constructor(_id, region, addFunc, deleteFunc, temp){
+        super();
+        this._id = _id;
+        this.region=region;
+        // this.index = index;
+        this.regionId = "";
+        this.addFunction = addFunc;
+        this.deleteFunction= deleteFunc;
+        this.temp=temp;
+    }
+    async doTransaction() {
+		const { data } = await this.addFunction({ variables: { _id: this._id, region:this.region, index: -1 }, refetchQueries: this.temp});
+        this.regionId = data.addRegion;
+		console.log(data, this.regionId)
+        return data;
+    }
+    async undoTransaction() {
+        const { data } = await this.deleteFunction({ variables: { _id: this._id, regionId:this.regionId }, refetchQueries: this.temp});
+		return data;
     }
 }
 

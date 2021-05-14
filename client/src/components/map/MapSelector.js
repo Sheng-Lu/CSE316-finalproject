@@ -12,7 +12,8 @@ import * as mutations 					from '../../cache/mutations';
 import RedGlobe							from '../../image/2554416-world-map-red-globe-america-europe-and-africa.jpg';
 import WButton from 'wt-frontend/build/components/wbutton/WButton';
 import {UpdateRegionSheet_Transaction,
-		SortRegion_Transaction, }						from '../../utils/jsTPS';
+		SortRegion_Transaction, 
+		AddRegion_Transaction, }						from '../../utils/jsTPS';
 
 import { BrowserRouter, Switch, Route, Redirect, useHistory, useLocation } from 'react-router-dom';
 import RegionSheet          from './RegionSheet';
@@ -134,6 +135,7 @@ const MapSelector = (props) =>{
 		toggleRegionSelect(false);
 		setCurrentRegion(region);
 		setCurrentRegionParent(parent);
+		clearTps();
 		history.push("/map/"+currentMap._id+'/'+region._id);
 	}
 
@@ -146,9 +148,12 @@ const MapSelector = (props) =>{
             flag: 'flag',
             landmarks: []
 		}
-        const {data} = await AddRegion({variables: {_id:parentId, region:nRegion}, refetchQueries: [{query: GET_DB_MAPS}]});
-
-        return data;
+        // const {data} = await AddRegion({variables: {_id:parentId, region:nRegion, index: -1}, refetchQueries: [{query: GET_DB_MAPS}]});
+        // return data;
+		let temp = [{ query: GET_DB_MAPS }];
+		let transaction = new AddRegion_Transaction(parentId, nRegion, AddRegion, DeleteSheetRegion, temp);
+		props.tps.addTransaction(transaction);
+		tpsRedo();
     }
 
 	const handleChangeRegionSheet = (id, regionId, field, old, value) =>{
@@ -193,7 +198,8 @@ const MapSelector = (props) =>{
 					<ul>
 						<WNavItem>
 							<Logo className='logo' toggleMap={toggleMapSelect} mapSelect={mapSelect} 
-							regionSelect={regionSelect} auth={auth} toggleRegion={toggleRegionSelect}/>
+							regionSelect={regionSelect} auth={auth} toggleRegion={toggleRegionSelect}
+							clearTps={clearTps}	/>
 						</WNavItem>
 					</ul>
 					<ul>
@@ -254,7 +260,7 @@ const MapSelector = (props) =>{
 				path={"/map/"+currentMap._id+'/'+currentRegion._id}
 				name={"region_"+currentMap._id+'_'+currentRegion._id}
 				render={() => 
-				<RegionViewer toggleRegion={toggleRegionSelect} parent={currentRegionParent} region={currentRegion} />}
+				<RegionViewer toggleRegion={toggleRegionSelect} parent={currentRegionParent} region={currentRegion} clearTps={clearTps}/>}
 			>
 			</Route>
 			
