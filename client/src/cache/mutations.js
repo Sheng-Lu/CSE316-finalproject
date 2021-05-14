@@ -89,3 +89,16 @@ export const UPDATE_REGION_SHEET_FIELD = gql`
 		}
 	}
 `;
+
+export const DELETE_SHEET_REGION = gql`
+	mutation DeleteSheetRegion($_id: String!, $regionId: String!) {
+		deleteSheetRegion(_id: $_id, regionId: $regionId) {
+			_id
+			name
+			capital
+			leader
+			flag
+			landmarks
+		}
+	}
+`;

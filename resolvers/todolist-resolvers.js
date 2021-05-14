@@ -92,5 +92,18 @@ module.exports = {
 			if(updated) return (region);
 			else return (found.region);
 		},
+
+		deleteSheetRegion: async (_, args) => {
+			const  { _id, regionId } = args;
+			const mapId = new ObjectId(_id);
+			const found = await Map.findOne({_id: mapId});
+			let region = found.region;
+
+			region = region.filter(item => item._id.toString() !== regionId);
+
+			const updated = await Map.updateOne({_id: mapId}, { region: region })
+			if(updated) return (region);
+			else return (found.region);
+		},
 	}
 }

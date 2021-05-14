@@ -110,7 +110,8 @@ const RegionSheet = (props) =>{
             {
                 regionList.map((value, index) =>(
                     <SheetEntry region={value} handleSelectRegion={props.handleSelectRegion} parent={props.map}
-                    handleChangeRegionSheet={props.handleChangeRegionSheet} />
+                    handleChangeRegionSheet={props.handleChangeRegionSheet} handleDeleteRegionSheet={props.handleDeleteRegionSheet} 
+                     />
                 ))
             }
             </div>

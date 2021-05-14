@@ -45,12 +45,16 @@ const SheetEntry = (props) => {
         }
     }
 
+    const handleDelete = () =>{
+        props.handleDeleteRegionSheet(props.parent._id, props.region._id);
+    }
+
     return(
         <WRow>
             <WCol size='3' className='sheetCol' >
                 <div className='sheetCol-name'>
                 <WButton className='sheet-delete' >
-                        <i className="material-icons">close</i>
+                        <i className="material-icons" onClick={handleDelete} >close</i>
                 </WButton>
                 {
                     editingName ?
