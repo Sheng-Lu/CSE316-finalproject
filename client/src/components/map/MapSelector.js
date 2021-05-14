@@ -12,7 +12,7 @@ import * as mutations 					from '../../cache/mutations';
 import RedGlobe							from '../../image/2554416-world-map-red-globe-america-europe-and-africa.jpg';
 import WButton from 'wt-frontend/build/components/wbutton/WButton';
 import {UpdateRegionSheet_Transaction,
-			 }						from '../../utils/jsTPS';
+		SortRegion_Transaction, }						from '../../utils/jsTPS';
 
 import { BrowserRouter, Switch, Route, Redirect, useHistory, useLocation } from 'react-router-dom';
 import RegionSheet          from './RegionSheet';
@@ -100,6 +100,11 @@ const MapSelector = (props) =>{
 		}
 	}
 
+	const clearTps = async () =>{
+		await props.tps.clearAllTransactions();
+	}
+
+
 	const setShowLogin = () => {
 		toggleShowAccount(false);
 		toggleShowCreate(false);
@@ -149,9 +154,10 @@ const MapSelector = (props) =>{
 	const handleChangeRegionSheet = (id, regionId, field, old, value) =>{
 		// UpdateRegionSheetField({ variables: { _id: id, regionId:regionId, field: field, value: value}, refetchQueries: [{ query: GET_DB_MAPS }] });
 
-		let transaction = new UpdateRegionSheet_Transaction(id, regionId, field, old, value, UpdateRegionSheetField)
+		let transaction = new UpdateRegionSheet_Transaction(id, regionId, field, old, value, UpdateRegionSheetField);
 		props.tps.addTransaction(transaction);
 		tpsRedo();
+
 	}
 
 	const handleDeleteRegionSheet = (id, regionId) => {
@@ -167,11 +173,16 @@ const MapSelector = (props) =>{
 		return true;
 	}
 
-	const handleSort = (regionList, criteria) =>{
-		const id = currentMap._id
+	const handleSort = (id, regionList, criteria) =>{
+		// const id = currentMap._id
 		const increasing = isIncreasing(regionList, criteria);
-		console.log(increasing)
-		SortRegion({ variables: { _id: id, criteria:criteria, increasing:increasing }, refetchQueries: [{ query: GET_DB_MAPS }] });
+		// console.log(increasing)
+		// SortRegion({ variables: { _id: id, criteria:criteria, increasing:increasing }, refetchQueries: [{ query: GET_DB_MAPS }] });
+
+		let temp = [{ query: GET_DB_MAPS }];
+		let transaction = new SortRegion_Transaction(id, criteria, increasing, SortRegion, temp);
+		props.tps.addTransaction(transaction);
+		tpsRedo();
 	}
 
 

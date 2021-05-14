@@ -56,7 +56,7 @@ const RegionSheet = (props) =>{
     }
 
     const handleSort = (criteria) =>{
-        props.handleSort(regionList, criteria)
+        props.handleSort(props.map._id, regionList, criteria)
     }
 
     return(

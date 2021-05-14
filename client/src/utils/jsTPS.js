@@ -5,25 +5,6 @@ export class jsTPS_Transaction {
     undoTransaction () {};
 }
 /*  Handles list name changes, or any other top level details of a todolist that may be added   */
-export class UpdateListField_Transaction extends jsTPS_Transaction {
-    constructor(_id, field, prev, update, callback) {
-        super();
-        this.prev = prev;
-        this.update = update;
-        this.field = field;
-        this._id = _id;
-        this.updateFunction = callback;
-    }
-    async doTransaction() {
-		const { data } = await this.updateFunction({ variables: { _id: this._id , field: this.field, value: this.update }});
-		return data;
-    }
-    async undoTransaction() {
-        const { data } = await this.updateFunction({ variables: { _id: this._id, field: this.field, value: this.prev }});
-		return data;
-    }
-}
-
 export class UpdateRegionSheet_Transaction extends jsTPS_Transaction{
     constructor(_id, regionId, field, prev, update, callback){
         super();
@@ -44,7 +25,33 @@ export class UpdateRegionSheet_Transaction extends jsTPS_Transaction{
     }
 }
 
+export class SortRegion_Transaction extends jsTPS_Transaction{
+    constructor(mapId, criteria, increasing, callback, temp) {
+        super();
+        this.mapId = mapId;
+        this.criteria = criteria;
+        this.increasing = increasing;
+        this.updateFunction = callback;
+        this.temp = temp;
+    }
+    async doTransaction() {
+		const { data } = await this.updateFunction({ variables: { _id: this.mapId, criteria:this.criteria, increasing: this.increasing }, refetchQueries: this.temp});
+        if(data) {
+            console.log(data)
+            return data;
 
+        }
+    }
+
+    async undoTransaction() {
+		const { data } = await this.updateFunction({ variables: { _id: this.mapId, criteria:this.criteria, increasing: !this.increasing }, refetchQueries: this.temp});
+        if(data) {
+            console.log(data)
+            return data;
+        }
+
+    }
+}
 
 export class jsTPS {
     constructor() {
