@@ -15,7 +15,7 @@ export class UpdateListField_Transaction extends jsTPS_Transaction {
         this.updateFunction = callback;
     }
     async doTransaction() {
-		const { data } = await this.updateFunction({ variables: { _id: this._id, field: this.field, value: this.update }});
+		const { data } = await this.updateFunction({ variables: { _id: this._id , field: this.field, value: this.update }});
 		return data;
     }
     async undoTransaction() {
@@ -24,132 +24,25 @@ export class UpdateListField_Transaction extends jsTPS_Transaction {
     }
 }
 
-/*  Handles item reordering */
-export class ReorderItems_Transaction extends jsTPS_Transaction {
-    constructor(listID, itemID, dir, callback) {
+export class UpdateRegionSheet_Transaction extends jsTPS_Transaction{
+    constructor(_id, regionId, field, prev, update, callback){
         super();
-        this.listID = listID;
-        this.itemID = itemID;
-		this.dir = dir;
-		this.revDir = dir === 1 ? -1 : 1;
-		this.updateFunction = callback;
-	}
-
-    async doTransaction() {
-		const { data } = await this.updateFunction({ variables: { itemId: this.itemID, _id: this.listID, direction: this.dir }});
-		return data;
-    }
-
-    async undoTransaction() {
-		const { data } = await this.updateFunction({ variables: { itemId: this.itemID, _id: this.listID, direction: this.revDir }});
-		return data;
-
-    }
-    
-}
-
-export class SortItems_Transaction extends jsTPS_Transaction{
-    constructor(listID, nextSortRule, prevSortRule, callback) {
-        super();
-        this.listID = listID;
-        this.nextSortRule = nextSortRule;
-        this.prevSortRule = prevSortRule;
+        this.prev = prev;
+        this.update = update;
+        this.field = field;
+        this._id = _id;
+        this.regionId=regionId;
         this.updateFunction = callback;
     }
     async doTransaction() {
-		const { data } = await this.updateFunction({ variables: { _id: this.listID, criteria: this.nextSortRule}});
-        if(data) {
-            console.log(data)
-            return data;
-
-        }
-    }
-
-    async undoTransaction() {
-		const { data } = await this.updateFunction({ variables: { _id: this.listID, criteria: this.prevSortRule}});
-        if(data) {
-            console.log(data)
-            return data;
-
-        }
-
-    }
-}
-
-export class EditItem_Transaction extends jsTPS_Transaction {
-	constructor(listID, itemID, field, prev, update, flag, callback) {
-		super();
-		this.listID = listID;
-		this.itemID = itemID;
-		this.field = field;
-		this.prev = prev;
-		this.update = update;
-		this.flag = flag;
-		this.updateFunction = callback;
-	}	
-
-	async doTransaction() {
-		const { data } = await this.updateFunction({ 
-				variables:{  itemId: this.itemID, _id: this.listID, 
-							 field: this.field, value: this.update, 
-							 flag: this.flag 
-						  }
-			});
+		const { data } = await this.updateFunction({ variables: { _id: this._id, regionId:this.regionId, field: this.field, value: this.update }});
 		return data;
     }
-
     async undoTransaction() {
-        console.log('undo: ', this.prev, this.update)
-		const { data } = await this.updateFunction({ 
-				variables:{ itemId: this.itemID, _id: this.listID, 
-							field: this.field, value: this.prev, 
-							flag: this.flag 
-						  }
-			});
-        if(data) console.log(data)
-		return data;
-
-    }
-}
-
-/*  Handles create/delete of list items */
-export class UpdateListItems_Transaction extends jsTPS_Transaction {
-    // opcodes: 0 - delete, 1 - add 
-    constructor(listID, itemID, item, opcode, addfunc, delfunc, index = -1) {
-        super();
-        this.listID = listID;
-		this.itemID = itemID;
-		this.item = item;
-        this.addFunction = addfunc;
-        this.deleteFunction = delfunc;
-        this.opcode = opcode;
-        this.index = index;
-    }
-    async doTransaction() {
-		let data;
-        this.opcode === 0 ? { data } = await this.deleteFunction({
-							variables: {itemId: this.itemID, _id: this.listID}})
-						  : { data } = await this.addFunction({
-							variables: {item: this.item, _id: this.listID, index: this.index}})  
-		if(this.opcode !== 0) {
-            this.item._id = this.itemID = data.addItem;
-		}
-		return data;
-    }
-    // Since delete/add are opposites, flip matching opcode
-    async undoTransaction() {
-		let data;
-        this.opcode === 1 ? { data } = await this.deleteFunction({
-							variables: {itemId: this.itemID, _id: this.listID}})
-                          : { data } = await this.addFunction({
-							variables: {item: this.item, _id: this.listID, index: this.index}})
-		if(this.opcode !== 1) {
-            this.item._id = this.itemID = data.addItem;
-        }
+        const { data } = await this.updateFunction({ variables: { _id: this._id, regionId:this.regionId, field: this.field, value: this.prev }});
 		return data;
     }
 }
-
 
 
 

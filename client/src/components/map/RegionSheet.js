@@ -41,17 +41,18 @@ const RegionSheet = (props) =>{
 	}
 
     const handleAddRegion = async () =>{
-        let nRegion = {
-			_id : '',
-			name: 'untitled',
-			capital: 'capital',
-			leader: 'leader',
-            flag: 'flag',
-            landmarks: []
-		}
-        const {data} = await AddRegion({variables: {_id:props.map._id, region:nRegion}, refetchQueries: [{query: GET_DB_MAPS}]});
+        // let nRegion = {
+		// 	_id : '',
+		// 	name: 'untitled',
+		// 	capital: 'capital',
+		// 	leader: 'leader',
+        //     flag: 'flag',
+        //     landmarks: []
+		// }
+        // const {data} = await AddRegion({variables: {_id:props.map._id, region:nRegion}, refetchQueries: [{query: GET_DB_MAPS}]});
 
-        return data;
+        // return data;
+        props.handleAddRegion(props.map._id);
     }
 
     const handleSort = (criteria) =>{
@@ -69,12 +70,12 @@ const RegionSheet = (props) =>{
                     </WButton>
                 </WCol>
                 <WCol size='1'>
-                    <WButton className='region-undo' hoverAnimation='lighten' span='true' clickAnimation='ripple-dark'>
-                        <i className="material-icons">undo</i>
+                    <WButton className='region-undo' hoverAnimation='lighten' span='true' clickAnimation='ripple-dark' onClick={props.undo}>
+                        <i className="material-icons" >undo</i>
                     </WButton>
                 </WCol>
                 <WCol size='1'>
-                    <WButton className='region-redo' hoverAnimation='lighten' span='true' clickAnimation='ripple-dark'>
+                    <WButton className='region-redo' hoverAnimation='lighten' span='true' clickAnimation='ripple-dark'onClick={props.redo}>
                         <i className="material-icons">redo</i>
                     </WButton>
                 </WCol>

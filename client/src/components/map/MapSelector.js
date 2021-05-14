@@ -11,6 +11,8 @@ import * as mutations 					from '../../cache/mutations';
 
 import RedGlobe							from '../../image/2554416-world-map-red-globe-america-europe-and-africa.jpg';
 import WButton from 'wt-frontend/build/components/wbutton/WButton';
+import {UpdateRegionSheet_Transaction,
+			 }						from '../../utils/jsTPS';
 
 import { BrowserRouter, Switch, Route, Redirect, useHistory, useLocation } from 'react-router-dom';
 import RegionSheet          from './RegionSheet';
@@ -36,9 +38,13 @@ const MapSelector = (props) =>{
     let history = useHistory();
 	const location = useLocation();
 
+	const [canUndo, setCanUndo] = useState(props.tps.hasTransactionToUndo());
+	const [canRedo, setCanRedo] = useState(props.tps.hasTransactionToRedo());
+
 	const [UpdateRegionSheetField] = useMutation(mutations.UPDATE_REGION_SHEET_FIELD);
 	const [DeleteSheetRegion]		= useMutation(mutations.DELETE_SHEET_REGION);
 	const [SortRegion]				= useMutation(mutations.SORT_REGION);
+	const [AddRegion]           = useMutation(mutations.ADD_REGION);
 
 	let maplist = [];
 
@@ -78,6 +84,22 @@ const MapSelector = (props) =>{
 		DeleteMap({ variables: { _id: _id }, refetchQueries: [{ query: GET_DB_MAPS }] });
 	}
 
+	const tpsUndo = async () => {
+		const ret = await props.tps.undoTransaction();
+		if(ret) {
+			setCanUndo(props.tps.hasTransactionToUndo());
+			setCanRedo(props.tps.hasTransactionToRedo());
+		}
+	}
+
+	const tpsRedo = async () => {
+		const ret = await props.tps.doTransaction();
+		if(ret) {
+			setCanUndo(props.tps.hasTransactionToUndo());
+			setCanRedo(props.tps.hasTransactionToRedo());
+		}
+	}
+
 	const setShowLogin = () => {
 		toggleShowAccount(false);
 		toggleShowCreate(false);
@@ -110,8 +132,26 @@ const MapSelector = (props) =>{
 		history.push("/map/"+currentMap._id+'/'+region._id);
 	}
 
-	const handleChangeRegionSheet = (id, regionId, field, value) =>{
-		UpdateRegionSheetField({ variables: { _id: id, regionId:regionId, field: field, value: value}, refetchQueries: [{ query: GET_DB_MAPS }] });
+	const handleAddRegion = async (parentId) =>{
+        let nRegion = {
+			_id : '',
+			name: 'untitled',
+			capital: 'capital',
+			leader: 'leader',
+            flag: 'flag',
+            landmarks: []
+		}
+        const {data} = await AddRegion({variables: {_id:parentId, region:nRegion}, refetchQueries: [{query: GET_DB_MAPS}]});
+
+        return data;
+    }
+
+	const handleChangeRegionSheet = (id, regionId, field, old, value) =>{
+		// UpdateRegionSheetField({ variables: { _id: id, regionId:regionId, field: field, value: value}, refetchQueries: [{ query: GET_DB_MAPS }] });
+
+		let transaction = new UpdateRegionSheet_Transaction(id, regionId, field, old, value, UpdateRegionSheetField)
+		props.tps.addTransaction(transaction);
+		tpsRedo();
 	}
 
 	const handleDeleteRegionSheet = (id, regionId) => {
@@ -128,23 +168,10 @@ const MapSelector = (props) =>{
 	}
 
 	const handleSort = (regionList, criteria) =>{
-		// let list = {
-		// 	_id: activeList._id,
-		// 	id: activeList.id,
-		// 	name: activeList.name,
-		// 	owner: activeList.owner,
-		// 	items: activeList.items,
-		// }
-		// const id = activeList._id;
-		// const increasing = isIncreasing(criteria);
-		// let transaction = new SortItems_Transaction(id, criteria, increasing, SortItem, list, UpdateItem);
-		// props.tps.addTransaction(transaction);
-
 		const id = currentMap._id
 		const increasing = isIncreasing(regionList, criteria);
 		console.log(increasing)
 		SortRegion({ variables: { _id: id, criteria:criteria, increasing:increasing }, refetchQueries: [{ query: GET_DB_MAPS }] });
-
 	}
 
 
@@ -206,7 +233,8 @@ const MapSelector = (props) =>{
 			render={() => 
 			<RegionSheet map={currentMap} toggleMap={toggleMapSelect} showAccount={showAccount} 
 				refetch={refetch} handleSelectRegion={handleSelectRegion} handleChangeRegionSheet={handleChangeRegionSheet} 
-				handleDeleteRegionSheet={handleDeleteRegionSheet} handleSort={handleSort} />}
+				handleDeleteRegionSheet={handleDeleteRegionSheet} handleSort={handleSort} handleAddRegion={handleAddRegion} 
+				undo={tpsUndo} redo={tpsRedo} />}
 			>
 			</Route>
 

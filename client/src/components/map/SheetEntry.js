@@ -25,7 +25,7 @@ const SheetEntry = (props) => {
         toggleName(false);
         const newName = e.target.value ? e.target.value : 'untitled';
         if(newName !== props.region.name){
-            props.handleChangeRegionSheet(props.parent._id, props.region._id, 'name', newName);
+            props.handleChangeRegionSheet(props.parent._id, props.region._id, 'name', props.region.name, newName);
         }
     }
 
@@ -33,7 +33,7 @@ const SheetEntry = (props) => {
         toggleCapital(false);
         const newCapital = e.target.value ? e.target.value : 'capital';
         if(newCapital !== props.region.capital){
-            props.handleChangeRegionSheet(props.parent._id, props.region._id, 'capital', newCapital);
+            props.handleChangeRegionSheet(props.parent._id, props.region._id, 'capital', props.region.capital, newCapital);
         }
     }
 
@@ -41,7 +41,7 @@ const SheetEntry = (props) => {
         toggleLeader(false);
         const newLeader = e.target.value ? e.target.value : 'leader';
         if(newLeader !== props.region.leader){
-            props.handleChangeRegionSheet(props.parent._id, props.region._id, 'leader', newLeader);
+            props.handleChangeRegionSheet(props.parent._id, props.region._id, 'leader', props.region.leader, newLeader);
         }
     }
 
