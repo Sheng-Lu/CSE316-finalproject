@@ -46,7 +46,7 @@ const SheetEntry = (props) => {
     }
 
     const handleDelete = () =>{
-        props.handleDeleteRegionSheet(props.parent._id, props.region._id);
+        props.handleDeleteRegionSheet(props.parent._id, props.region._id, props.parent.region);
     }
 
     return(

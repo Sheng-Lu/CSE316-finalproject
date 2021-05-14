@@ -13,7 +13,8 @@ import RedGlobe							from '../../image/2554416-world-map-red-globe-america-euro
 import WButton from 'wt-frontend/build/components/wbutton/WButton';
 import {UpdateRegionSheet_Transaction,
 		SortRegion_Transaction, 
-		AddRegion_Transaction, }						from '../../utils/jsTPS';
+		AddRegion_Transaction, 
+		DeleteRegion_Transaction}				from '../../utils/jsTPS';
 
 import { BrowserRouter, Switch, Route, Redirect, useHistory, useLocation } from 'react-router-dom';
 import RegionSheet          from './RegionSheet';
@@ -162,11 +163,22 @@ const MapSelector = (props) =>{
 		let transaction = new UpdateRegionSheet_Transaction(id, regionId, field, old, value, UpdateRegionSheetField);
 		props.tps.addTransaction(transaction);
 		tpsRedo();
-
 	}
 
-	const handleDeleteRegionSheet = (id, regionId) => {
-		DeleteSheetRegion({ variables: { _id: id, regionId:regionId}, refetchQueries: [{ query: GET_DB_MAPS }] });
+	const handleDeleteRegionSheet = (id, regionId, regList) => {
+		let index = 0;
+		for(const i of regList){
+			if (i._id == regionId){
+				break;
+			}
+			index +=1;
+		}
+		// DeleteSheetRegion({ variables: { _id: id, regionId:regionId}, refetchQueries: [{ query: GET_DB_MAPS }] });
+		let temp = [{ query: GET_DB_MAPS }];
+		let transaction = new DeleteRegion_Transaction(id, regionId, index, AddRegion, DeleteSheetRegion, temp);
+		props.tps.addTransaction(transaction);
+		tpsRedo();
+	
 	}
 
 	const isIncreasing = (regionList, criteria) =>{

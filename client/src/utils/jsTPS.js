@@ -60,12 +60,46 @@ export class AddRegion_Transaction extends jsTPS_Transaction{
     async doTransaction() {
 		const { data } = await this.addFunction({ variables: { _id: this._id, region:this.region, index: -1 }, refetchQueries: this.temp});
         this.regionId = data.addRegion;
-		console.log(data, this.regionId)
+		// console.log(data, this.regionId)
         return data;
     }
     async undoTransaction() {
         const { data } = await this.deleteFunction({ variables: { _id: this._id, regionId:this.regionId }, refetchQueries: this.temp});
 		return data;
+    }
+}
+
+export class DeleteRegion_Transaction extends jsTPS_Transaction{
+    constructor(_id, regionId, index, addFunc, deleteFunc, temp){
+        super();
+        this._id = _id;
+        this.regionId=regionId;
+        this.index = index
+        this.addFunction = addFunc;
+        this.deleteFunction= deleteFunc;
+        this.region = {};
+        this.temp=temp;
+    }
+    async doTransaction() {
+		const { data } = await this.deleteFunction({ variables: { _id: this._id, regionId:this.regionId}, refetchQueries: this.temp});
+        this.region= data.deleteSheetRegion;
+        console.log(this.region)
+        return data;
+    }
+
+    async undoTransaction() {
+        let nRegion = {
+			_id : this.region._id,
+			name: this.region.name,
+			capital: this.region.capital,
+			leader: this.region.leader,
+            flag: this.region.flag,
+            landmarks: this.region.landmarks
+		}
+
+		const { data } = await this.addFunction({ variables: { _id: this._id, region:nRegion, index: this.index }, refetchQueries: this.temp});
+        return data;
+
     }
 }
 

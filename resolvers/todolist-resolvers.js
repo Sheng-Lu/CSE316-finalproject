@@ -66,9 +66,9 @@ module.exports = {
 			const mapId = new ObjectId(_id);
 			const objectId = new ObjectId();
 			const found = await Map.findOne({_id: mapId});
-			region._id = objectId;
+			if(region._id === '') region._id = objectId;
 			let regList = found.region;
-			
+
 			if(index < 0) regList.push(region);
 			else regList.splice(index, 0, region);
 			// regList.push(region);
@@ -102,11 +102,18 @@ module.exports = {
 			const found = await Map.findOne({_id: mapId});
 			let region = found.region;
 
+			let temp = {}
+			region.map(item => {
+				if(item._id.toString() === regionId) {	
+					temp = item;
+				}
+			});
+
 			region = region.filter(item => item._id.toString() !== regionId);
 
 			const updated = await Map.updateOne({_id: mapId}, { region: region })
-			if(updated) return (region);
-			else return (found.region);
+			if(updated) return (temp);
+			else return (temp);
 		},
 
 		sortRegion: async (_, args) => {
