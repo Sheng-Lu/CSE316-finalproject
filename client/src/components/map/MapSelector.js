@@ -167,15 +167,24 @@ const MapSelector = (props) =>{
 
 	const handleDeleteRegionSheet = (id, regionId, regList) => {
 		let index = 0;
-		for(const i of regList){
-			if (i._id == regionId){
+		let region = {};
+		for(const m of maplist){
+			if (m._id == id){
+				for(const r of m.region){
+					if(r._id == regionId){
+						region=r;
+						break;
+					}
+					index ++;
+				}
 				break;
 			}
-			index +=1;
 		}
+		// console.log(region)
+
 		// DeleteSheetRegion({ variables: { _id: id, regionId:regionId}, refetchQueries: [{ query: GET_DB_MAPS }] });
 		let temp = [{ query: GET_DB_MAPS }];
-		let transaction = new DeleteRegion_Transaction(id, regionId, index, AddRegion, DeleteSheetRegion, temp);
+		let transaction = new DeleteRegion_Transaction(id, regionId, index, AddRegion, DeleteSheetRegion, temp, region);
 		props.tps.addTransaction(transaction);
 		tpsRedo();
 	

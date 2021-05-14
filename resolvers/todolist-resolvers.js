@@ -102,18 +102,11 @@ module.exports = {
 			const found = await Map.findOne({_id: mapId});
 			let region = found.region;
 
-			let temp = {}
-			region.map(item => {
-				if(item._id.toString() === regionId) {	
-					temp = item;
-				}
-			});
-
 			region = region.filter(item => item._id.toString() !== regionId);
 
 			const updated = await Map.updateOne({_id: mapId}, { region: region })
-			if(updated) return (temp);
-			else return (temp);
+			if(updated) return (region);
+			else return (found.region);
 		},
 
 		sortRegion: async (_, args) => {

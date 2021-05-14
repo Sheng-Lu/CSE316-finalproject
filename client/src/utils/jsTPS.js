@@ -70,20 +70,20 @@ export class AddRegion_Transaction extends jsTPS_Transaction{
 }
 
 export class DeleteRegion_Transaction extends jsTPS_Transaction{
-    constructor(_id, regionId, index, addFunc, deleteFunc, temp){
+    constructor(_id, regionId, index, addFunc, deleteFunc, temp, region){
         super();
         this._id = _id;
         this.regionId=regionId;
         this.index = index
         this.addFunction = addFunc;
         this.deleteFunction= deleteFunc;
-        this.region = {};
+        this.region = region;
         this.temp=temp;
     }
     async doTransaction() {
 		const { data } = await this.deleteFunction({ variables: { _id: this._id, regionId:this.regionId}, refetchQueries: this.temp});
-        this.region= data.deleteSheetRegion;
-        console.log(this.region)
+        // this.region= data.deleteSheetRegion;
+        // console.log(this.region)
         return data;
     }
 
