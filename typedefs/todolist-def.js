@@ -30,6 +30,7 @@ const typeDefs = gql `
 		addRegion(_id: String!, region:RegionInput!): String
 		updateRegionSheetField(_id: String!, regionId:String!, field:String!, value:String!): [Region]
 		deleteSheetRegion(_id: String!, regionId: String!): [Region]
+		sortRegion(_id: String!, criteria: String!, increasing: Boolean!): [Region]
 	}
 
 	input MapInput{

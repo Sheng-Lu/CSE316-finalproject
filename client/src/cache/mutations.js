@@ -102,3 +102,16 @@ export const DELETE_SHEET_REGION = gql`
 		}
 	}
 `;
+
+export const SORT_REGION = gql`
+	mutation SortRegion($_id: String!, $criteria: String!, $increasing: Boolean!){
+		sortRegion(_id: $_id, criteria: $criteria, increasing: $increasing) {
+			_id
+			name
+			capital
+			leader
+			flag
+			landmarks
+		}
+	}
+`;

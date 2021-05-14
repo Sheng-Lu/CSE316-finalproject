@@ -54,6 +54,10 @@ const RegionSheet = (props) =>{
         return data;
     }
 
+    const handleSort = (criteria) =>{
+        props.handleSort(regionList, criteria)
+    }
+
     return(
         !props.showAccount &&
         <div className='spreadSheet'> 
@@ -91,13 +95,13 @@ const RegionSheet = (props) =>{
 
             <WRow className='spreadSheet-header'>
                 <WCol size='3'>
-                    <div className='sheet-header' >Name</div>
+                    <div className='sheet-header' onClick={() =>handleSort("name")}>Name</div>
                 </WCol>
                 <WCol size='2'>
-                    <div className='sheet-header'>Capital</div>
+                    <div className='sheet-header' onClick={() =>handleSort("capital")}>Capital</div>
                 </WCol>
                 <WCol size='2'>
-                    <div className='sheet-header'>Leader</div>
+                    <div className='sheet-header' onClick={() =>handleSort("leader")}>Leader</div>
                 </WCol>
                 <WCol size='2'>
                     <div className='sheet-header'>Flag</div>

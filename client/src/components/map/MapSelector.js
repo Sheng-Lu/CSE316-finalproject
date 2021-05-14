@@ -38,6 +38,7 @@ const MapSelector = (props) =>{
 
 	const [UpdateRegionSheetField] = useMutation(mutations.UPDATE_REGION_SHEET_FIELD);
 	const [DeleteSheetRegion]		= useMutation(mutations.DELETE_SHEET_REGION);
+	const [SortRegion]				= useMutation(mutations.SORT_REGION);
 
 	let maplist = [];
 
@@ -117,6 +118,36 @@ const MapSelector = (props) =>{
 		DeleteSheetRegion({ variables: { _id: id, regionId:regionId}, refetchQueries: [{ query: GET_DB_MAPS }] });
 	}
 
+	const isIncreasing = (regionList, criteria) =>{
+		let temp = regionList;
+		for(var i=0; i<temp.length-1; i++){
+			if(temp[i][criteria] > temp[i+1][criteria])
+				return false;
+		}
+		return true;
+	}
+
+	const handleSort = (regionList, criteria) =>{
+		// let list = {
+		// 	_id: activeList._id,
+		// 	id: activeList.id,
+		// 	name: activeList.name,
+		// 	owner: activeList.owner,
+		// 	items: activeList.items,
+		// }
+		// const id = activeList._id;
+		// const increasing = isIncreasing(criteria);
+		// let transaction = new SortItems_Transaction(id, criteria, increasing, SortItem, list, UpdateItem);
+		// props.tps.addTransaction(transaction);
+
+		const id = currentMap._id
+		const increasing = isIncreasing(regionList, criteria);
+		console.log(increasing)
+		SortRegion({ variables: { _id: id, criteria:criteria, increasing:increasing }, refetchQueries: [{ query: GET_DB_MAPS }] });
+
+	}
+
+
     return(
         <WLayout wLayout="header">
 			<WLHeader>
@@ -175,7 +206,7 @@ const MapSelector = (props) =>{
 			render={() => 
 			<RegionSheet map={currentMap} toggleMap={toggleMapSelect} showAccount={showAccount} 
 				refetch={refetch} handleSelectRegion={handleSelectRegion} handleChangeRegionSheet={handleChangeRegionSheet} 
-				handleDeleteRegionSheet={handleDeleteRegionSheet} />}
+				handleDeleteRegionSheet={handleDeleteRegionSheet} handleSort={handleSort} />}
 			>
 			</Route>
 
