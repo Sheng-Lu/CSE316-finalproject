@@ -29,6 +29,22 @@ const SheetEntry = (props) => {
         }
     }
 
+    const handleEditCapital =(e) =>{
+        toggleCapital(false);
+        const newCapital = e.target.value ? e.target.value : 'capital';
+        if(newCapital !== props.region.capital){
+            props.handleChangeRegionSheet(props.parent._id, props.region._id, 'capital', newCapital);
+        }
+    }
+
+    const handleEditLeader =(e) =>{
+        toggleLeader(false);
+        const newLeader = e.target.value ? e.target.value : 'leader';
+        if(newLeader !== props.region.leader){
+            props.handleChangeRegionSheet(props.parent._id, props.region._id, 'leader', newLeader);
+        }
+    }
+
     return(
         <WRow>
             <WCol size='3' className='sheetCol' >
@@ -50,11 +66,26 @@ const SheetEntry = (props) => {
             </WCol>
 
             <WCol size='2' className='sheetCol'>
-                <div className='sheetEntry' >{props.region.capital}</div>
+                {
+                    editingCapital ?
+                    <WInput 
+                        className='sheetEntry-input' onBlur={handleEditCapital}
+                        autoFocus={true} defaultValue={props.region.capital} type='text'
+                        inputClass="table-input-class"
+                    />
+                    : <div className='sheetEntry' onClick={() => toggleCapital(true)} >{props.region.capital}</div>
+                }
             </WCol>
 
             <WCol size='2' className='sheetCol'>
-                <div className='sheetEntry' >{props.region.leader}</div>
+                {editingLeader ?
+                    <WInput 
+                        className='sheetEntry-input' onBlur={handleEditLeader}
+                        autoFocus={true} defaultValue={props.region.leader} type='text'
+                        inputClass="table-input-class"
+                    />
+                : <div className='sheetEntry' onClick={() => toggleLeader(true)} >{props.region.leader}</div>
+                }
             </WCol>
 
             <WCol size='2' className='sheetCol'>
