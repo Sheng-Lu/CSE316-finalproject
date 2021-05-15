@@ -154,6 +154,35 @@ module.exports = {
 			if(updated) return (region);
 			else return (found.region);
 		},
+
+		changeParent: async (_, args) =>{
+			const { originalParent, newParent, regionId, index} = args;
+			const oldId = new ObjectId(originalParent);
+			const newId = new ObjectId(newParent);
+
+			const foundOld = await Map.findOne({_id: oldId});
+			const foundNew = await Map.findOne({_id: newId});
+
+			let oldRegion = foundOld.region;
+			let region = {};
+			for(let o of oldRegion){
+				if(o._id.toString() == regionId){
+					region = o;
+					break;
+				}
+			}
+			oldRegion = oldRegion.filter(item => item._id.toString() !== regionId);
+
+			const regList = foundNew.region;
+			if(index < 0) regList.push(region);
+			else regList.splice(index, 0, region);
+
+			const updated1 = await Map.updateOne({_id: oldId}, {region: oldRegion});
+			const updated2 = await Map.updateOne({_id: newId}, {region: regList});
+
+			if(updated1 && updated2) return (oldRegion);
+			else return (foundOld.region);
+		},
 		
 	}
 }

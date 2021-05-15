@@ -48,6 +48,7 @@ const MapSelector = (props) =>{
 	const [DeleteSheetRegion]		= useMutation(mutations.DELETE_SHEET_REGION);
 	const [SortRegion]				= useMutation(mutations.SORT_REGION);
 	const [AddRegion]           = useMutation(mutations.ADD_REGION);
+	const [ChangeParent]		= useMutation(mutations.CHANGE_PARENT);
 
 	let maplist = [];
 
@@ -220,6 +221,16 @@ const MapSelector = (props) =>{
 		tpsRedo();
 	}
 
+	const handleChangeParent = (originalParent, newParent, regionId, index, newParentObject) =>{
+		console.log(originalParent, newParent, regionId, index);
+		ChangeParent({ variables: { originalParent: originalParent, newParent:newParent, regionId:regionId, index: -1 },
+			 refetchQueries: [{ query: GET_DB_MAPS }] }).catch(err=>console.log(JSON.stringify(err, null, 2)));
+			
+		setCurrentMap(newParentObject);
+		setCurrentRegionParent(newParentObject)
+		history.push("/map/"+newParentObject._id+'/'+regionId);
+
+	}
 
     return(
         <WLayout wLayout="header">
@@ -236,6 +247,8 @@ const MapSelector = (props) =>{
 						{mapSelect ? <div></div> 
 						:<div className="navRegionName" >{currentMap.name}</div>  }
 					</ul>
+						{regionSelect ? <div></div> 
+						: <div>next</div>}
 					<ul>
 						<NavbarOptions
 							fetchUser={props.fetchUser} 	auth={auth} 
@@ -291,7 +304,7 @@ const MapSelector = (props) =>{
 				name={"region_"+currentMap._id+'_'+currentRegion._id}
 				render={() => 
 				<RegionViewer toggleRegion={toggleRegionSelect} parent={currentRegionParent} region={currentRegion} clearTps={clearTps} 
-				handleChangeLandmark={handleChangeLandmark} undo={tpsUndo} redo={tpsRedo} />}
+				handleChangeLandmark={handleChangeLandmark} undo={tpsUndo} redo={tpsRedo} handleChangeParent={handleChangeParent} />}
 			>
 			</Route>
 			

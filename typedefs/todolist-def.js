@@ -32,6 +32,7 @@ const typeDefs = gql `
 		updateLandmark(_id: String!, regionId:String!, field:String!, value:[String]): [Region]
 		deleteSheetRegion(_id: String!, regionId: String!): [Region]
 		sortRegion(_id: String!, criteria: String!, increasing: Boolean!): [Region]
+		changeParent(originalParent: String!, newParent: String!, regionId: String!, index: Int!): [Region]
 	}
 
 	input MapInput{

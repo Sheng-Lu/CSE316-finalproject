@@ -17,7 +17,17 @@ const RegionLandmark = (props) => {
 
     const handleEditLandmark =(e)=>{
         toggleLandmark(false);
+        if(props.landmark == e.target.value){
+            return
+        }
+
         let old = props.landList;
+        for(let l of old){
+            if(l == e.target.value){
+                alert("Landmark already exist")
+                return;
+            }
+        }
         let updated = [];
         old.map(item => {
             if(item !== props.landmark){

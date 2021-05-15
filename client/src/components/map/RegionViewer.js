@@ -15,13 +15,16 @@ const RegionViewer = (props) =>{
     let history = useHistory();
 
     const [newLandmark, setNewLandmark] = useState("");
+    const [editingParent, toggleEditingParent] = useState(false);
 
     const { loading, error, data, refetch } = useQuery(GET_DB_MAPS);
 
     let landList = props.region.landmarks;
+    let mapList = [];
 
     if(data) { 
         for(let map of data.getAllMaps){
+            mapList.push(map);
 			if(map._id == props.parent._id){
                 {
                     for(let region of map.region){
@@ -31,7 +34,6 @@ const RegionViewer = (props) =>{
                         }
                     }
                 }
-                break;
             }
 		}
 	}
@@ -46,6 +48,7 @@ const RegionViewer = (props) =>{
         if(newLandmark !== ""){    
             for(let l of landList){
                 if(l == newLandmark){
+                    alert("Landmark already exist")
                     return;
                 }
             }
@@ -60,7 +63,46 @@ const RegionViewer = (props) =>{
         setNewLandmark(e.target.value);
     }
 
-    
+    const handleSetParent = (e) =>{
+        toggleEditingParent(false);
+
+        let newParent = e.target.value;
+        if(newParent == props.parent.name || newParent == ""){
+            return
+        }
+        let newParentId = "";
+        let newParentObject = {};
+
+        console.log(mapList);
+        for(let m of mapList){
+            if(m.name == newParent){
+                newParentId= m._id;
+                newParentObject = m;
+                break;
+            }
+        }
+
+        if(newParentId == ""){
+            alert("New Parent does not exist");
+            return;
+        }
+
+        let index = 0;
+        for(let r of props.parent.region){
+            if(r._id == props.region._id){
+                break;
+            }
+            index ++;
+        }
+
+        props.handleChangeParent(props.parent._id, newParentId, props.region._id, index, newParentObject)
+
+        console.log(mapList)
+    }
+
+    const handleEditParent = () =>{
+        toggleEditingParent(true);
+    }
 
     // console.log(props.region.landmarks)
     return(
@@ -100,12 +142,17 @@ const RegionViewer = (props) =>{
                 <WCol size='4' className='viewer-region-name' >
                     Parent Name: 
                 </WCol>
-                <WCol size='4' className='viewer-region-name viewer-parent-name-value viewer-region-name-value' onClick={handleBackToSheet} >
-                    {props.parent.name}
+                <WCol size='4' className='viewer-region-name viewer-parent-name-value viewer-region-name-value' >
+                    {editingParent ?
+                        <WInput onBlur={handleSetParent} autoFocus={true}
+                        defaultValue={props.parent.name} type='text'/>
+
+                    : <div onClick={handleBackToSheet}>{props.parent.name}</div>
+                    }
                 </WCol>
                 <WCol size='1'>
                     <WButton className='viewer-edit' hoverAnimation='lighten'
-                        span='true' clickAnimation='ripple-dark' >
+                        span='true' clickAnimation='ripple-dark' onClick={handleEditParent} >
                         <i className="material-icons">edit</i>
                     </WButton>
                 </WCol>

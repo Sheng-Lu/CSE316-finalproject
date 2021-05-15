@@ -128,3 +128,16 @@ export const SORT_REGION = gql`
 		}
 	}
 `;
+
+export const CHANGE_PARENT = gql`
+mutation ChangeParent($originalParent: String! , $newParent: String!, $regionId: String!, $index: Int!){
+	changeParent(originalParent: $originalParent, newParent: $newParent, regionId: $regionId, index: $index) {
+		_id
+		name
+		capital
+		leader
+		flag
+		landmarks
+	}
+}
+`;
