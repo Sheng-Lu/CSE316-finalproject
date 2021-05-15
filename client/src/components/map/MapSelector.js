@@ -14,7 +14,8 @@ import WButton from 'wt-frontend/build/components/wbutton/WButton';
 import {UpdateRegionSheet_Transaction,
 		SortRegion_Transaction, 
 		AddRegion_Transaction, 
-		DeleteRegion_Transaction}				from '../../utils/jsTPS';
+		DeleteRegion_Transaction,
+		ChangeParent_Transaction}				from '../../utils/jsTPS';
 
 import { BrowserRouter, Switch, Route, Redirect, useHistory, useLocation } from 'react-router-dom';
 import RegionSheet          from './RegionSheet';
@@ -222,14 +223,27 @@ const MapSelector = (props) =>{
 	}
 
 	const handleChangeParent = (originalParent, newParent, regionId, index, newParentObject) =>{
-		console.log(originalParent, newParent, regionId, index);
-		ChangeParent({ variables: { originalParent: originalParent, newParent:newParent, regionId:regionId, index: -1 },
-			 refetchQueries: [{ query: GET_DB_MAPS }] }).catch(err=>console.log(JSON.stringify(err, null, 2)));
+		// console.log(originalParent, newParent, regionId, index);
+		// ChangeParent({ variables: { originalParent: originalParent, newParent:newParent, regionId:regionId, index: -1 },
+		// 	 refetchQueries: [{ query: GET_DB_MAPS }] });
 			
-		setCurrentMap(newParentObject);
-		setCurrentRegionParent(newParentObject)
-		history.push("/map/"+newParentObject._id+'/'+regionId);
+		// setCurrentMap(newParentObject);
+		// setCurrentRegionParent(newParentObject);
+		// history.push("/map/"+newParentObject._id+'/'+regionId);
+		console.log(newParentObject, currentRegionParent)
+		let transaction = new ChangeParent_Transaction(originalParent, newParent, regionId, index, 
+			handleChangeParentUndoRedo, newParentObject, currentRegionParent);
+		props.tps.addTransaction(transaction);
+		tpsRedo();
+	}
 
+	const handleChangeParentUndoRedo= (originalParent, newParent, regionId, index, newParentObject) =>{
+		ChangeParent({ variables: { originalParent: originalParent, newParent:newParent, regionId:regionId, index: index },
+			refetchQueries: [{ query: GET_DB_MAPS }] });
+		   
+	   setCurrentMap(newParentObject);
+	   setCurrentRegionParent(newParentObject);
+	   history.push("/map/"+newParentObject._id+'/'+regionId);
 	}
 
     return(
@@ -245,7 +259,7 @@ const MapSelector = (props) =>{
 					</ul>
 					<ul>
 						{mapSelect ? <div></div> 
-						:<div className="navRegionName" >{currentMap.name}</div>  }
+						:<div className="navRegionName" >{"Parent: " + currentMap.name}</div>  }
 					</ul>
 						{regionSelect ? <div></div> 
 						: <div>next</div>}

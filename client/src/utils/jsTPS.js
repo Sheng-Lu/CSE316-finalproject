@@ -104,6 +104,27 @@ export class DeleteRegion_Transaction extends jsTPS_Transaction{
     }
 }
 
+export class ChangeParent_Transaction extends jsTPS_Transaction{
+    constructor(originalParent, newParent, regionId, index, redo, parentObject, oldParentObject){
+        super();
+        this.originalParent = originalParent;
+        this.newParent=newParent;
+        // this.index = index;
+        this.regionId = regionId;
+        this.index = index;
+        this.func= redo;
+        this.parentObject=parentObject;
+        this.oldParentObject = oldParentObject
+        console.log("hhh", oldParentObject)
+    }
+    async doTransaction() {
+		this.func(this.originalParent, this.newParent, this.regionId, -1, this.parentObject)
+    }
+    async undoTransaction() {
+        this.func(this.newParent, this.originalParent, this.regionId, this.index, this.oldParentObject)
+    }
+}
+
 export class jsTPS {
     constructor() {
         // THE TRANSACTION STACK
