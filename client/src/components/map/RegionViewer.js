@@ -44,9 +44,13 @@ const RegionViewer = (props) =>{
 
     const handleAddLandmark = (e) =>{
         if(newLandmark !== ""){    
+            for(let l of landList){
+                if(l == newLandmark){
+                    return;
+                }
+            }
             let temp = landList;
             let temp1 = [...temp, newLandmark];
-            console.log(temp, temp1)
             props.handleChangeLandmark(props.parent._id, props.region._id, 'landmarks', temp, temp1)
             setNewLandmark("");
         }
@@ -66,13 +70,13 @@ const RegionViewer = (props) =>{
             <WRow>
                 <WCol size='1'>
                     <WButton className='viewer-undo' hoverAnimation='lighten'
-                        span='true' clickAnimation='ripple-dark' >
+                        span='true' clickAnimation='ripple-dark' onClick={props.undo} >
                         <i className="material-icons">undo</i>
                     </WButton>
                 </WCol>
                 <WCol size='1'>
                     <WButton className='viewer-redo' hoverAnimation='lighten'
-                        span='true' clickAnimation='ripple-dark' >
+                        span='true' clickAnimation='ripple-dark' onClick={props.redo} >
                         <i className="material-icons">redo</i>
                     </WButton>
                 </WCol>
@@ -171,7 +175,7 @@ const RegionViewer = (props) =>{
                         </WButton>
                     </WCol>
                     <WCol size ='10'>
-                        <WInput className='viewerWinput' onBlur={handleLandmarkBlur} defaultValue="" />
+                        <WInput className='viewerWinput' onBlur={handleLandmarkBlur} />
                         {/* <div className='viewerLandmarkInputAdd'>
 
                         </div> */}

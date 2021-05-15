@@ -291,7 +291,7 @@ const MapSelector = (props) =>{
 				name={"region_"+currentMap._id+'_'+currentRegion._id}
 				render={() => 
 				<RegionViewer toggleRegion={toggleRegionSelect} parent={currentRegionParent} region={currentRegion} clearTps={clearTps} 
-				handleChangeLandmark={handleChangeLandmark}  />}
+				handleChangeLandmark={handleChangeLandmark} undo={tpsUndo} redo={tpsRedo} />}
 			>
 			</Route>
 			
