@@ -536,6 +536,7 @@ html {
     width: 85%;
     margin-left: 10%;
     height: 90%;
+    overflow: auto;
 }
 
 .viewerLandmarkInput{
@@ -572,4 +573,12 @@ html {
 
 .landmark{
     color: white;
+    // text-align: center;
+    margin-top: 2.3%;
+    
+}
+
+.landmark-delete{
+    color: red;
+    background-color: transparent;
 }

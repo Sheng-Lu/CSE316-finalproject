@@ -162,8 +162,8 @@ const RegionViewer = (props) =>{
             <div className='viewerLandmarkBackground'>
                 {
                     landList.map((value, index) =>( 
-                    <RegionLandmark landmark={value}
-                        />
+                    <RegionLandmark landmark={value} deleteLandmark={props.handleChangeLandmark} parent={props.parent} region={props.region}
+                    landList={landList} />
                     ))
                 }
             </div>

@@ -154,9 +154,6 @@ module.exports = {
 			if(updated) return (region);
 			else return (found.region);
 		},
-
-		// removeLandmark: async (_, args) =>{
-
-		// }
+		
 	}
 }
