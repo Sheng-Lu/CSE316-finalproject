@@ -44,7 +44,6 @@ module.exports = {
 			return;
 		},
 
-		
 		renameMap: async(_, args) =>{
 			const {_id, newName} = args;
 			const id = new ObjectId(_id);
@@ -137,5 +136,23 @@ module.exports = {
 			if(updated) return (region);
 			else return (found.region);
 		},
+
+		updateLandmark: async (_, args) =>{
+			const { _id, regionId} = args;
+			let { value } = args
+			const mapId = new ObjectId(_id);
+			const found = await Map.findOne({_id: mapId});
+			let region = found.region;
+
+			region.map(region =>{
+				if(region._id.toString() === regionId){
+					region.landmarks = value;
+				}
+			});
+			
+			const updated = await Map.updateOne({_id: mapId}, { region: region });
+			if(updated) return (region);
+			else return (found.region);
+		}
 	}
 }

@@ -44,6 +44,7 @@ const MapSelector = (props) =>{
 	const [canRedo, setCanRedo] = useState(props.tps.hasTransactionToRedo());
 
 	const [UpdateRegionSheetField] = useMutation(mutations.UPDATE_REGION_SHEET_FIELD);
+	const [UpdateLandmark]			=useMutation(mutations.UPDATE_LANDMARK);
 	const [DeleteSheetRegion]		= useMutation(mutations.DELETE_SHEET_REGION);
 	const [SortRegion]				= useMutation(mutations.SORT_REGION);
 	const [AddRegion]           = useMutation(mutations.ADD_REGION);
@@ -159,8 +160,16 @@ const MapSelector = (props) =>{
 
 	const handleChangeRegionSheet = (id, regionId, field, old, value) =>{
 		// UpdateRegionSheetField({ variables: { _id: id, regionId:regionId, field: field, value: value}, refetchQueries: [{ query: GET_DB_MAPS }] });
+		let temp = [{ query: GET_DB_MAPS }];
+		let transaction = new UpdateRegionSheet_Transaction(id, regionId, field, old, value, UpdateRegionSheetField, temp);
+		props.tps.addTransaction(transaction);
+		tpsRedo();
 
-		let transaction = new UpdateRegionSheet_Transaction(id, regionId, field, old, value, UpdateRegionSheetField);
+	}
+
+	const handleChangeLandmark = (id, regionId, field, old, value) =>{
+		let temp = [{ query: GET_DB_MAPS }];
+		let transaction = new UpdateRegionSheet_Transaction(id, regionId, field, old, value, UpdateLandmark, temp);
 		props.tps.addTransaction(transaction);
 		tpsRedo();
 	}
@@ -281,7 +290,8 @@ const MapSelector = (props) =>{
 				path={"/map/"+currentMap._id+'/'+currentRegion._id}
 				name={"region_"+currentMap._id+'_'+currentRegion._id}
 				render={() => 
-				<RegionViewer toggleRegion={toggleRegionSelect} parent={currentRegionParent} region={currentRegion} clearTps={clearTps}/>}
+				<RegionViewer toggleRegion={toggleRegionSelect} parent={currentRegionParent} region={currentRegion} clearTps={clearTps} 
+				handleChangeLandmark={handleChangeLandmark}  />}
 			>
 			</Route>
 			

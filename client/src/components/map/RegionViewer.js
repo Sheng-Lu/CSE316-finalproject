@@ -6,12 +6,35 @@ import NavbarOptions 					    from '../navbar/NavbarOptions';
 import { GET_DB_MAPS, GET_MAP_ID} 				from '../../cache/queries';
 import { WNavbar, WSidebar, WNavItem, WRow, WButton, WCol } 	from 'wt-frontend';
 import { WLayout, WLHeader, WLMain, WLSide } from 'wt-frontend';
-import SheetEntry							from './SheetEntry';
+import RegionLandmark							from './RegionLandmark';
 import * as mutations 					from '../../cache/mutations';
 import { BrowserRouter, Switch, Route, Redirect, useHistory } from 'react-router-dom';
+import WInput from 'wt-frontend/build/components/winput/WInput';
 
 const RegionViewer = (props) =>{
     let history = useHistory();
+
+    const [newLandmark, setNewLandmark] = useState("");
+
+    const { loading, error, data, refetch } = useQuery(GET_DB_MAPS);
+
+    let landList = props.region.landmarks;
+
+    if(data) { 
+        for(let map of data.getAllMaps){
+			if(map._id == props.parent._id){
+                {
+                    for(let region of map.region){
+                        if(region._id == props.region._id){
+                            landList = region.landmarks;
+                            break;
+                        }
+                    }
+                }
+                break;
+            }
+		}
+	}
 
     const handleBackToSheet = () =>{
         props.toggleRegion(true);
@@ -19,6 +42,23 @@ const RegionViewer = (props) =>{
         history.push("/map/"+props.parent._id);
     }
 
+    const handleAddLandmark = (e) =>{
+        if(newLandmark !== ""){    
+            let temp = landList;
+            let temp1 = [...temp, newLandmark];
+            console.log(temp, temp1)
+            props.handleChangeLandmark(props.parent._id, props.region._id, 'landmarks', temp, temp1)
+            setNewLandmark("");
+        }
+    }
+
+    const handleLandmarkBlur = (e) =>{
+        setNewLandmark(e.target.value);
+    }
+
+    
+
+    // console.log(props.region.landmarks)
     return(
         <WRow className='regionViewer'>
 
@@ -116,18 +156,25 @@ const RegionViewer = (props) =>{
                 Region Landmarks:
             </div>
             <div className='viewerLandmarkBackground'>
+                {
+                    landList.map((value, index) =>( 
+                    <RegionLandmark landmark={value}
+                        />
+                    ))
+                }
             </div>
             <div className='viewerLandmarkInput'>
                 <WRow>
                     <WCol size='1'>
-                        <WButton className='viewerLandmarkInputAdd' >
+                        <WButton className='viewerLandmarkInputAdd' onClick={handleAddLandmark} >
                             <i className="material-icons">add</i>
                         </WButton>
                     </WCol>
-                    <WCol size ='3'>
-                        <div className='viewerLandmarkInputAdd'>
+                    <WCol size ='10'>
+                        <WInput className='viewerWinput' onBlur={handleLandmarkBlur} defaultValue="" />
+                        {/* <div className='viewerLandmarkInputAdd'>
 
-                        </div>
+                        </div> */}
                     </WCol>
                 </WRow>
             </div>

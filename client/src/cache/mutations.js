@@ -90,6 +90,19 @@ export const UPDATE_REGION_SHEET_FIELD = gql`
 	}
 `;
 
+export const UPDATE_LANDMARK = gql`
+	mutation UpdateLandmark($_id: String!, $regionId: String!, $field: String!, $value: [String]) {
+		updateLandmark(_id: $_id, regionId: $regionId, field: $field, value: $value) {
+			_id
+			name
+			capital
+			leader
+			flag
+			landmarks
+		}
+	}
+`;
+
 export const DELETE_SHEET_REGION = gql`
 	mutation DeleteSheetRegion($_id: String!, $regionId: String!) {
 		deleteSheetRegion(_id: $_id, regionId: $regionId) {

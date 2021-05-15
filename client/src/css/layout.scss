@@ -539,15 +539,20 @@ html {
 }
 
 .viewerLandmarkInput{
-    background-color: grey;
+    background-color: lightgrey;
     width: 85%;
     margin-left: 10%;
     height: 5.65%;
 }
 
+.viewerWinput{
+    margin-top: .5%;
+    width: 100%;
+}
+
 .viewerLandmarkInputAdd{
     background-color: transparent;
-    color: greenyellow
+    color: green
 }
 
 .viewerLandmarkInputAddBox{
@@ -563,4 +568,8 @@ html {
 
 .flagViewer{
     width: 95%;
+}
+
+.landmark{
+    color: white;
 }

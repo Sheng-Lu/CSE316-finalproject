@@ -6,7 +6,7 @@ export class jsTPS_Transaction {
 }
 /*  Handles list name changes, or any other top level details of a todolist that may be added   */
 export class UpdateRegionSheet_Transaction extends jsTPS_Transaction{
-    constructor(_id, regionId, field, prev, update, callback){
+    constructor(_id, regionId, field, prev, update, callback, temp){
         super();
         this.prev = prev;
         this.update = update;
@@ -14,13 +14,14 @@ export class UpdateRegionSheet_Transaction extends jsTPS_Transaction{
         this._id = _id;
         this.regionId=regionId;
         this.updateFunction = callback;
+        this.temp = temp;
     }
     async doTransaction() {
-		const { data } = await this.updateFunction({ variables: { _id: this._id, regionId:this.regionId, field: this.field, value: this.update }});
+		const { data } = await this.updateFunction({ variables: { _id: this._id, regionId:this.regionId, field: this.field, value: this.update }, refetchQueries: this.temp});
 		return data;
     }
     async undoTransaction() {
-        const { data } = await this.updateFunction({ variables: { _id: this._id, regionId:this.regionId, field: this.field, value: this.prev }});
+        const { data } = await this.updateFunction({ variables: { _id: this._id, regionId:this.regionId, field: this.field, value: this.prev }, refetchQueries: this.temp});
 		return data;
     }
 }

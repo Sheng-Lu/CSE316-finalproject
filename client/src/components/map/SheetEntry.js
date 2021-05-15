@@ -5,10 +5,11 @@ import { BrowserRouter, Switch, Route, Redirect, useHistory } from 'react-router
 
 const SheetEntry = (props) => {
 
-    const landmark = "";
+    let landmark = "";
 
     if(props.region.landmarks.length >0){
         landmark=props.region.landmarks[0];
+        landmark = landmark + ',';
     }
 
     let temp = landmark + " ...";
