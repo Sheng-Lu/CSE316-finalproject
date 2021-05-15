@@ -36,7 +36,7 @@ const MapSelector = (props) =>{
 	const [regionSelect, toggleRegionSelect] = useState(true);
 	const [currentMap, setCurrentMap] = useState({})
 	const [currentRegion, setCurrentRegion] = useState({});
-	const [currentRegionParent, setCurrentRegionParent] = useState({});
+	// const [currentRegionParent, setCurrentRegionParent] = useState({});
 	const [newMap, toggleNewMap]		= useState(false);
     let history = useHistory();
 	const location = useLocation();
@@ -138,7 +138,7 @@ const MapSelector = (props) =>{
 		toggleMapSelect(false);
 		toggleRegionSelect(false);
 		setCurrentRegion(region);
-		setCurrentRegionParent(parent);
+		setCurrentMap(parent);
 		clearTps();
 		history.push("/map/"+currentMap._id+'/'+region._id);
 	}
@@ -230,9 +230,9 @@ const MapSelector = (props) =>{
 		// setCurrentMap(newParentObject);
 		// setCurrentRegionParent(newParentObject);
 		// history.push("/map/"+newParentObject._id+'/'+regionId);
-		console.log(newParentObject, currentRegionParent)
+		// console.log(newParentObject, currentMap)
 		let transaction = new ChangeParent_Transaction(originalParent, newParent, regionId, index, 
-			handleChangeParentUndoRedo, newParentObject, currentRegionParent);
+			handleChangeParentUndoRedo, newParentObject, currentMap);
 		props.tps.addTransaction(transaction);
 		tpsRedo();
 	}
@@ -240,10 +240,61 @@ const MapSelector = (props) =>{
 	const handleChangeParentUndoRedo= (originalParent, newParent, regionId, index, newParentObject) =>{
 		ChangeParent({ variables: { originalParent: originalParent, newParent:newParent, regionId:regionId, index: index },
 			refetchQueries: [{ query: GET_DB_MAPS }] });
-		   
-	   setCurrentMap(newParentObject);
-	   setCurrentRegionParent(newParentObject);
+		refetch();
+	   	setCurrentMap(newParentObject);
+	//    setCurrentRegionParent(newParentObject);
 	   history.push("/map/"+newParentObject._id+'/'+regionId);
+	}
+
+	const [DisableSiblingL, toggleDisableSiblingL]	= useState(false);
+	const [DisableSiblingR, toggleDisableSiblingR]	= useState(false);
+
+	const checkSiblingEnable =(map, reg) =>{
+
+		setCurrentMap(map);
+		setCurrentRegion(reg);
+		if(map.region[0]._id == reg._id){
+			toggleDisableSiblingL(true);
+		}else{
+			toggleDisableSiblingL(false);
+		}
+		let len = map.region.length-1;
+		if(map.region[len]._id == reg._id){
+			toggleDisableSiblingR(true);
+		}else{
+			toggleDisableSiblingR(false);
+		}
+	}
+
+	const siblingLeft = () =>{
+		let regList = currentMap.region;
+		let prev = {};
+		for(let r of regList){
+			if(r._id == currentRegion._id){
+				break;
+			}
+			prev=r;
+		}
+		setCurrentRegion(prev);
+		history.push("/map/"+currentMap._id+'/'+prev._id);
+	}
+
+	const siblingRight = () =>{
+		let regList = currentMap.region;
+		let next = {};
+		let temp = false;
+		for(let r of regList){
+			next = r;
+			if(temp){
+				break;
+			}
+			if(r._id == currentRegion._id){
+				temp = true;
+			}
+		}
+		console.log(next);
+		setCurrentRegion(next);
+		history.push("/map/"+currentMap._id+'/'+next._id);
 	}
 
     return(
@@ -262,7 +313,14 @@ const MapSelector = (props) =>{
 						:<div className="navRegionName" >{"Parent: " + currentMap.name}</div>  }
 					</ul>
 						{regionSelect ? <div></div> 
-						: <div>next</div>}
+						: <div className='siblingLR' >
+							<WButton className={DisableSiblingL? 'buttonDisabled' :'viewerLeftSib'} onClick={siblingLeft} >
+								<i className="material-icons">arrow_back</i>
+							</WButton>
+							<WButton className={DisableSiblingR? 'buttonDisabled' :'viewerRightSib'} onClick={siblingRight} >
+								<i className="material-icons">arrow_forward</i>
+							</WButton>
+						</div> }
 					<ul>
 						<NavbarOptions
 							fetchUser={props.fetchUser} 	auth={auth} 
@@ -317,8 +375,9 @@ const MapSelector = (props) =>{
 				path={"/map/"+currentMap._id+'/'+currentRegion._id}
 				name={"region_"+currentMap._id+'_'+currentRegion._id}
 				render={() => 
-				<RegionViewer toggleRegion={toggleRegionSelect} parent={currentRegionParent} region={currentRegion} clearTps={clearTps} 
-				handleChangeLandmark={handleChangeLandmark} undo={tpsUndo} redo={tpsRedo} handleChangeParent={handleChangeParent} />}
+				<RegionViewer toggleRegion={toggleRegionSelect} parent={currentMap} region={currentRegion} clearTps={clearTps} 
+				handleChangeLandmark={handleChangeLandmark} undo={tpsUndo} redo={tpsRedo} handleChangeParent={handleChangeParent} 
+				checkSiblingEnable={checkSiblingEnable} />}
 			>
 			</Route>
 			

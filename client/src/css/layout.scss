@@ -583,3 +583,25 @@ html {
     color: red;
     background-color: transparent;
 }
+
+.siblingLR{
+    display: flex;
+    flex-direction: row;
+}
+
+.viewerLeftSib, .viewerRightSib{
+    background-color: transparent;
+    color: white;
+    margin-right: 10%;
+    margin-top: 6%;
+    margin-left: 6%;
+}
+
+.buttonDisabled{
+    background-color: transparent;
+    pointer-events: none;
+    margin-right: 10%;
+    margin-top: 6%;
+    margin-left: 6%;
+    
+}

@@ -21,11 +21,13 @@ const RegionViewer = (props) =>{
 
     let landList = props.region.landmarks;
     let mapList = [];
+    let parent = {};
 
     if(data) { 
         for(let map of data.getAllMaps){
             mapList.push(map);
 			if(map._id == props.parent._id){
+                parent = map;
                 {
                     for(let region of map.region){
                         if(region._id == props.region._id){
@@ -37,6 +39,8 @@ const RegionViewer = (props) =>{
             }
 		}
 	}
+
+    props.checkSiblingEnable(parent, props.region);
 
     const handleBackToSheet = () =>{
         props.toggleRegion(true);
