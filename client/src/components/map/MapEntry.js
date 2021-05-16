@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { WButton, WInput, WRow, WCol, WNavItem} from 'wt-frontend';
+import DeleteMap						from '../modals/DeleteMap';
 import { BrowserRouter, Switch, Route, Redirect, useHistory } from 'react-router-dom';
 import RegionSheet          from './RegionSheet';
 
@@ -7,6 +8,8 @@ const MapEntry = (props) => {
 
     const value = props.value.name;
     const [editing, toggleEdit] = useState(props.newMap);
+    const [deleteMapConfirm, toggleDeleteMapConfirm] = useState(false);
+
 
     const handleRename = (e) =>{
         toggleEdit(false);
@@ -53,12 +56,16 @@ const MapEntry = (props) => {
             </WCol>
 
             <WCol size='2' className='map-entry-delete'>
-                <WButton className='map-delete' onClick={handleDelete} >
+                <WButton className='map-delete' onClick={() => toggleDeleteMapConfirm(true)} >
                 <i className="material-icons">delete</i>
                 </WButton>
             </WCol>
 
         </WRow>
+
+        {
+            deleteMapConfirm && (<DeleteMap setDelete={toggleDeleteMapConfirm} delete={props.deleteMap} mapId={props.value._id} deleteMapConfirm={deleteMapConfirm}/>)
+        }
         
         </>
     )
