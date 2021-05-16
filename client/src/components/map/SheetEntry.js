@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { WButton, WInput, WRow, WCol, WNavItem} from 'wt-frontend';
+import DeleteSheetEntry						from '../modals/DeleteSheetEntry';
 import { BrowserRouter, Switch, Route, Redirect, useHistory } from 'react-router-dom';
 
 
@@ -21,6 +22,8 @@ const SheetEntry = (props) => {
     const [editingName, toggleName] = useState(false);
     const [editingCapital, toggleCapital] = useState(false);
     const [editingLeader, toggleLeader] = useState(false);
+
+    const [deleteRegionConfirm, toggleDeleteRegionConfirm] = useState(false);
 
     const handleEditName = (e) =>{
         toggleName(false);
@@ -50,12 +53,15 @@ const SheetEntry = (props) => {
         props.handleDeleteRegionSheet(props.parent._id, props.region._id, props.parent.region);
     }
 
+
+
     return(
+        <>
         <WRow>
             <WCol size='3' className='sheetCol' >
                 <div className='sheetCol-name'>
-                <WButton className='sheet-delete' >
-                        <i className="material-icons" onClick={handleDelete} >close</i>
+                <WButton className='sheet-delete' onClick={() => toggleDeleteRegionConfirm(true)} >
+                        <i className="material-icons"  >close</i>
                 </WButton>
                 {
                     editingName ?
@@ -104,6 +110,10 @@ const SheetEntry = (props) => {
             </WCol>
 
         </WRow>
+        {
+            deleteRegionConfirm && (<DeleteSheetEntry setDelete={toggleDeleteRegionConfirm} delete={handleDelete} deleteRegionConfirm={deleteRegionConfirm}/>)
+        }
+        </>
     )
 }
 
