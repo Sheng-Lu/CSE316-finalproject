@@ -6,6 +6,35 @@ import { BrowserRouter, Switch, Route, Redirect, useHistory } from 'react-router
 
 const SheetEntry = (props) => {
 
+    //left37 up38 right39 down40
+    const keyCombination = (e, callback) => {
+		if(e.keyCode == '37') { 
+			if(editingCapital){
+                toggleCapital(false);
+                toggleName(true);
+            }else if(editingLeader){
+                toggleLeader(false);
+                toggleCapital(true);
+            }
+		}
+		else if (e.keyCode == '38') { 
+			
+		}
+        else if (e.keyCode == '39') { 
+			if(editingCapital){
+                toggleCapital(false);
+                toggleLeader(true);
+            }else if(editingName){
+                toggleName(false);
+                toggleCapital(true);
+            }
+		}
+        else if (e.keyCode == '40') { 
+			
+		}
+	}
+    document.onkeydown = keyCombination;
+
     let landmark = "";
 
     if(props.region.landmarks.length >0){
