@@ -70,12 +70,12 @@ const RegionSheet = (props) =>{
                     </WButton>
                 </WCol>
                 <WCol size='1'>
-                    <WButton className='region-undo' hoverAnimation='lighten' span='true' clickAnimation='ripple-dark' onClick={props.undo}>
+                    <WButton className={props.canUndo?'region-undo' :'regionButtonDisabled'} hoverAnimation='lighten' span='true' clickAnimation='ripple-dark' onClick={props.undo} >
                         <i className="material-icons" >undo</i>
                     </WButton>
                 </WCol>
                 <WCol size='1'>
-                    <WButton className='region-redo' hoverAnimation='lighten' span='true' clickAnimation='ripple-dark'onClick={props.redo}>
+                    <WButton className={props.canRedo?'region-redo': 'regionButtonDisabled'} hoverAnimation='lighten' span='true' clickAnimation='ripple-dark'onClick={props.redo}>
                         <i className="material-icons">redo</i>
                     </WButton>
                 </WCol>

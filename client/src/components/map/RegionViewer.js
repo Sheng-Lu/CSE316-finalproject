@@ -115,13 +115,13 @@ const RegionViewer = (props) =>{
         <WCol size='6' className='viewerLeft' >
             <WRow>
                 <WCol size='1'>
-                    <WButton className='viewer-undo' hoverAnimation='lighten'
+                    <WButton className={props.canUndo? 'viewer-undo':'regionButtonDisabled'} hoverAnimation='lighten'
                         span='true' clickAnimation='ripple-dark' onClick={props.undo} >
                         <i className="material-icons">undo</i>
                     </WButton>
                 </WCol>
                 <WCol size='1'>
-                    <WButton className='viewer-redo' hoverAnimation='lighten'
+                    <WButton className={props.canRedo? 'viewer-redo':'regionButtonDisabled'} hoverAnimation='lighten'
                         span='true' clickAnimation='ripple-dark' onClick={props.redo} >
                         <i className="material-icons">redo</i>
                     </WButton>

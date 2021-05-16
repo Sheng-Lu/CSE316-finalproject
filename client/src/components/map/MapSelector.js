@@ -23,6 +23,21 @@ import RegionViewer from './RegionViewer';
 
 
 const MapSelector = (props) =>{
+
+	const keyCombination = (e, callback) => {
+		if(e.key === 'z' && e.ctrlKey) {
+			if(props.tps.hasTransactionToUndo()) {
+				tpsUndo();
+			}
+		}
+		else if (e.key === 'y' && e.ctrlKey) { 
+			if(props.tps.hasTransactionToRedo()) {
+				tpsRedo();
+			}
+		}
+	}
+	document.onkeydown = keyCombination;
+
     const auth = props.user === null ? false : true;
 	const [showLogin, toggleShowLogin] 		= useState(false);
 	const [showCreate, toggleShowCreate] 	= useState(false);
@@ -314,10 +329,10 @@ const MapSelector = (props) =>{
 					</ul>
 						{regionSelect ? <div></div> 
 						: <div className='siblingLR' >
-							<WButton className={DisableSiblingL? 'buttonDisabled' :'viewerLeftSib'} onClick={siblingLeft} >
+							<WButton className={DisableSiblingL? 'buttonDisabled' :'viewerLeftSib'} onClick={siblingLeft} hoverAnimation='lighten'>
 								<i className="material-icons">arrow_back</i>
 							</WButton>
-							<WButton className={DisableSiblingR? 'buttonDisabled' :'viewerRightSib'} onClick={siblingRight} >
+							<WButton className={DisableSiblingR? 'buttonDisabled' :'viewerRightSib'} onClick={siblingRight} hoverAnimation='lighten'>
 								<i className="material-icons">arrow_forward</i>
 							</WButton>
 						</div> }
@@ -366,7 +381,7 @@ const MapSelector = (props) =>{
 			<RegionSheet map={currentMap} toggleMap={toggleMapSelect} showAccount={showAccount} 
 				refetch={refetch} handleSelectRegion={handleSelectRegion} handleChangeRegionSheet={handleChangeRegionSheet} 
 				handleDeleteRegionSheet={handleDeleteRegionSheet} handleSort={handleSort} handleAddRegion={handleAddRegion} 
-				undo={tpsUndo} redo={tpsRedo} />}
+				undo={tpsUndo} redo={tpsRedo} canUndo={canUndo} canRedo={canRedo} />}
 			>
 			</Route>
 
@@ -377,7 +392,7 @@ const MapSelector = (props) =>{
 				render={() => 
 				<RegionViewer toggleRegion={toggleRegionSelect} parent={currentMap} region={currentRegion} clearTps={clearTps} 
 				handleChangeLandmark={handleChangeLandmark} undo={tpsUndo} redo={tpsRedo} handleChangeParent={handleChangeParent} 
-				checkSiblingEnable={checkSiblingEnable} />}
+				checkSiblingEnable={checkSiblingEnable} canUndo={canUndo} canRedo={canRedo} />}
 			>
 			</Route>
 			

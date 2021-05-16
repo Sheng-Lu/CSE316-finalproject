@@ -368,6 +368,11 @@ html {
     color: white;
 }
 
+.regionButtonDisabled{
+    background-color: transparent;
+    pointer-events: none;
+}
+
 .region-add{
     color: greenyellow;
 }
