@@ -96,19 +96,19 @@ const RegionSheet = (props) =>{
 
             <WRow className='spreadSheet-header'>
                 <WCol size='3'>
-                    <div className='sheet-header' onClick={() =>handleSort("name")}>Name</div>
+                    <div className={regionList.length==0?'sheet-header-disabled': 'sheet-header'} onClick={() =>handleSort("name")}>Name</div>
                 </WCol>
                 <WCol size='2'>
-                    <div className='sheet-header' onClick={() =>handleSort("capital")}>Capital</div>
+                    <div className={regionList.length==0?'sheet-header-disabled': 'sheet-header'} onClick={() =>handleSort("capital")}>Capital</div>
                 </WCol>
                 <WCol size='2'>
-                    <div className='sheet-header' onClick={() =>handleSort("leader")}>Leader</div>
+                    <div className={regionList.length==0?'sheet-header-disabled': 'sheet-header'} onClick={() =>handleSort("leader")}>Leader</div>
                 </WCol>
                 <WCol size='2'>
-                    <div className='sheet-header'>Flag</div>
+                    <div className='sheet-header-non'>Flag</div>
                 </WCol>
                 <WCol size='3'>
-                    <div className='sheet-header'>Landmarks</div>
+                    <div className='sheet-header-non'>Landmarks</div>
                 </WCol>
             </WRow>
             <div className='sheetContent'>

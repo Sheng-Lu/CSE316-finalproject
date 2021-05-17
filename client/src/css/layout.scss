@@ -421,6 +421,22 @@ html {
     cursor: pointer;
 }
 
+.sheet-header-non{
+    color: white;
+    font-weight: bold;
+    font-size: 130%;
+    text-align: center;
+    pointer-events: none;
+}
+
+.sheet-header-disabled{
+    color: lightgray;
+    font-weight: bold;
+    font-size: 130%;
+    text-align: center;
+    pointer-events: none;
+}
+
 .sheetEntry{
     color: black;
     font-size: 130%;
