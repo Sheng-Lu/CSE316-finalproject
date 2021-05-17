@@ -77,7 +77,7 @@ const RegionViewer = (props) =>{
         let newParentId = "";
         let newParentObject = {};
 
-        console.log(mapList);
+        // console.log(mapList);
         for(let m of mapList){
             if(m.name == newParent){
                 newParentId= m._id;
@@ -101,7 +101,7 @@ const RegionViewer = (props) =>{
 
         props.handleChangeParent(props.parent._id, newParentId, props.region._id, index, newParentObject)
 
-        console.log(mapList)
+        // console.log(mapList)
     }
 
     const handleEditParent = () =>{
@@ -227,9 +227,6 @@ const RegionViewer = (props) =>{
                     </WCol>
                     <WCol size ='10'>
                         <WInput className='viewerWinput' onBlur={handleLandmarkBlur} />
-                        {/* <div className='viewerLandmarkInputAdd'>
-
-                        </div> */}
                     </WCol>
                 </WRow>
             </div>
