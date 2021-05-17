@@ -291,6 +291,7 @@ const MapSelector = (props) =>{
 			prev=r;
 		}
 		setCurrentRegion(prev);
+		clearTps();
 		history.push("/map/"+currentMap._id+'/'+prev._id);
 	}
 
@@ -309,6 +310,7 @@ const MapSelector = (props) =>{
 		}
 		console.log(next);
 		setCurrentRegion(next);
+		clearTps();
 		history.push("/map/"+currentMap._id+'/'+next._id);
 	}
 
@@ -325,7 +327,7 @@ const MapSelector = (props) =>{
 					</ul>
 					<ul>
 						{mapSelect ? <div></div> 
-						:<div className="navRegionName" >{"Parent: " + currentMap.name}</div>  }
+						:<div className="navRegionName" >{currentMap.name}{!regionSelect ? " > "+currentRegion.name : ""}</div> }
 					</ul>
 						{regionSelect ? <div></div> 
 						: <div className='siblingLR' >
@@ -379,9 +381,9 @@ const MapSelector = (props) =>{
 			name={"map_"+currentMap._id}
 			render={() => 
 			<RegionSheet map={currentMap} toggleMap={toggleMapSelect} showAccount={showAccount} 
-				refetch={refetch} handleSelectRegion={handleSelectRegion} handleChangeRegionSheet={handleChangeRegionSheet} 
+				refetch={refetch} handleSelectRegion={handleSelectRegion} handleChangeRegionSheet={handleChangeRegionSheet} clearTps={clearTps}
 				handleDeleteRegionSheet={handleDeleteRegionSheet} handleSort={handleSort} handleAddRegion={handleAddRegion} 
-				undo={tpsUndo} redo={tpsRedo} canUndo={canUndo} canRedo={canRedo} />}
+				undo={tpsUndo} redo={tpsRedo} canUndo={props.tps.hasTransactionToUndo()} canRedo={props.tps.hasTransactionToRedo()} />}
 			>
 			</Route>
 
@@ -392,7 +394,7 @@ const MapSelector = (props) =>{
 				render={() => 
 				<RegionViewer toggleRegion={toggleRegionSelect} parent={currentMap} region={currentRegion} clearTps={clearTps} 
 				handleChangeLandmark={handleChangeLandmark} undo={tpsUndo} redo={tpsRedo} handleChangeParent={handleChangeParent} 
-				checkSiblingEnable={checkSiblingEnable} canUndo={canUndo} canRedo={canRedo} />}
+				checkSiblingEnable={checkSiblingEnable} canUndo={props.tps.hasTransactionToUndo()} canRedo={props.tps.hasTransactionToRedo()} />}
 			>
 			</Route>
 			

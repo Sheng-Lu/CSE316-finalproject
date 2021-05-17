@@ -32,6 +32,7 @@ const RegionSheet = (props) =>{
 
     const handleReturnHome = () =>{
         props.toggleMap(true);
+        props.clearTps();
         history.push("/map");
     }
 
